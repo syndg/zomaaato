@@ -11,6 +11,20 @@ const config: Config = {
       colors: {
         "zomato-red": "rgb(239, 79, 95)",
       },
+      keyframes: {
+        slideDownAndFade: {
+          from: { opacity: "0", transform: "translateY(-12px)" },
+          to: { opacity: "1", transform: "translateY(0px)" },
+        },
+        slideUpAndFade: {
+          from: { opacity: "1", transform: "translateY(0px)" },
+          to: { opacity: "0", transform: "translateY(-12px)" },
+        },
+      },
+      animation: {
+        slideDownAndFade: "slideDownAndFade 0.2s ease-out",
+        slideUpAndFade: "slideUpAndFade 0.2s ease-out",
+      },
     },
   },
   plugins: [],
