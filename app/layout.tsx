@@ -24,7 +24,11 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body className={cn(poppins.className)}>
-          <NextTopLoader color="rgb(239, 79, 95)" showSpinner={false} />
+          <NextTopLoader
+            height={4}
+            color="rgb(239, 79, 95)"
+            showSpinner={false}
+          />
           <div className="max-w-[1200px] mx-auto">{children}</div>
         </body>
       </html>
