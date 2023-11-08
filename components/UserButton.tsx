@@ -2,7 +2,6 @@
 
 import * as Dropdown from "@radix-ui/react-dropdown-menu";
 import { SignOutButton } from "@clerk/nextjs";
-import { usePathname } from "next/navigation";
 import {
   ChevronDown,
   User as UserIcon,
@@ -18,15 +17,11 @@ interface UserButtonProps {
 }
 
 const UserButton = ({ user }: UserButtonProps) => {
-  const pathName = usePathname();
-  const pathText =
-    pathName === "/admin" ? "Admin" : `${user?.name.split(" ")[0]}`;
-
   if (!user) {
     return (
       <Link
         href="/sign-in"
-        className="flex items-center gap-1 py-1 px-3 rounded-md text-gray-800 border-2 group border-gray-300 hover:border-zomato-red/60 focus:outline-none transition-colors duration-200"
+        className="flex items-center gap-1 py-1 px-3 rounded-md text-gray-800 border-2 group border-gray-200 hover:border-zomato-red/60 focus:outline-none transition-colors duration-200"
       >
         <span className="font-semibold text-lg">Sign in</span>
         <UserCircle2 size={21} />
@@ -37,9 +32,9 @@ const UserButton = ({ user }: UserButtonProps) => {
   return (
     <Dropdown.Root>
       <Dropdown.Trigger asChild>
-        <button className="flex items-center gap-1 py-1 px-3 rounded-md border-2 group border-gray-300 hover:border-zomato-red/60 focus:outline-none transition-colors duration-200">
+        <button className="flex items-center gap-1 py-1 px-3 rounded-md border-2 group border-gray-300 hover:border-zomato-red/60 focus:outline-none transition-colors duration-200 data-[state=open]:bg-gray-200">
           <span className="font-semibold text-lg text-gray-800">
-            {pathText}
+            {user?.name.split(" ")[0]}
           </span>
           <Image
             src={user?.imageUrl as string}
