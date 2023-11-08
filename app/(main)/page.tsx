@@ -4,8 +4,8 @@ export default function Home() {
   return (
     <div>
       <h1>Home</h1>
-      <Link href="/admin" className="text-zomato-red">
-        Admin page
+      <Link href="/add-new" className="text-zomato-red">
+        Add a restaurant
       </Link>
     </div>
   );
