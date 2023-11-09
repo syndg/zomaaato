@@ -7,10 +7,10 @@ const Navbar = async () => {
   const user = await getUserFromDb();
 
   return (
-    <header>
-      <nav className="flex items-center justify-between px-5 py-4">
+    <header className="z-20 sticky top-0 bg-white/70 backdrop-blur-sm">
+      <nav className="flex items-center justify-between px-5 py-4 max-w-[1200px] mx-auto">
         <Link href="/">
-          <Image src="/zomato.png" height={30} width={130} alt="Zomato logo" />
+          <Image src="/zomato.png" height={30} width={125} alt="Zomato logo" />
           <span className="block leading-5 text-right font-bold italic -translate-x-[5px] text-lg text-zomato-red">
             Clone
           </span>

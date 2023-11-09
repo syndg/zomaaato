@@ -4,6 +4,7 @@ import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import { cn } from "@/lib/utils";
 import NextTopLoader from "nextjs-toploader";
+import { Toaster } from "react-hot-toast";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -23,13 +24,14 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <body className={cn(poppins.className)}>
+        <body className={cn(poppins.className, "relative")}>
           <NextTopLoader
             height={4}
             color="rgb(239, 79, 95)"
             showSpinner={false}
           />
-          <div className="max-w-[1200px] mx-auto">{children}</div>
+          <Toaster />
+          {children}
         </body>
       </html>
     </ClerkProvider>
