@@ -9,14 +9,16 @@ import {
   LogOut,
 } from "lucide-react";
 import { User } from "@prisma/client";
+import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 
 interface UserButtonProps {
   user?: User;
+  className?: string; // for styling the trigger only.
 }
 
-const UserButton = ({ user }: UserButtonProps) => {
+const UserButton = ({ user, className }: UserButtonProps) => {
   if (!user) {
     return (
       <Link
@@ -32,7 +34,12 @@ const UserButton = ({ user }: UserButtonProps) => {
   return (
     <Dropdown.Root>
       <Dropdown.Trigger asChild>
-        <button className="flex items-center gap-1 py-1 px-3 rounded-md border-2 group border-gray-300 hover:border-zomato-red/60 focus:outline-none transition-colors duration-200 data-[state=open]:bg-gray-200">
+        <button
+          className={cn(
+            "flex items-center gap-1 py-1 px-3 rounded-md border-2 group border-gray-300 hover:border-zomato-red/60 focus:outline-none transition-colors duration-200 data-[state=open]:bg-gray-200",
+            className
+          )}
+        >
           <span className="font-semibold text-lg text-gray-800">
             {user?.name.split(" ")[0]}
           </span>
@@ -51,7 +58,7 @@ const UserButton = ({ user }: UserButtonProps) => {
       </Dropdown.Trigger>
       <Dropdown.Portal>
         <Dropdown.Content
-          className="max-w-[350px] p-4 border-2 border-gray-300 rounded-lg animate-slideDownAndFade data-[state=closed]:animate-slideUpAndFade shadow-md"
+          className="max-w-[350px] z-30 p-4 border-2 border-gray-300 rounded-lg animate-slideDownAndFade data-[state=closed]:animate-slideUpAndFade shadow-md"
           align="end"
           sideOffset={8}
         >
