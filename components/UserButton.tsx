@@ -37,7 +37,7 @@ const UserButton = ({ user, className }: UserButtonProps) => {
         <button
           className={cn(
             "flex items-center gap-1 py-1 px-3 rounded-md border-2 group border-gray-300 hover:border-zomato-red/60 focus:outline-none transition-colors duration-200 data-[state=open]:bg-gray-200",
-            className
+            className,
           )}
         >
           <span className="font-semibold text-lg text-gray-800">
@@ -58,7 +58,7 @@ const UserButton = ({ user, className }: UserButtonProps) => {
       </Dropdown.Trigger>
       <Dropdown.Portal>
         <Dropdown.Content
-          className="max-w-[350px] z-30 p-4 border-2 border-gray-300 rounded-lg animate-slideDownAndFade data-[state=closed]:animate-slideUpAndFade shadow-md"
+          className="max-w-[350px] z-30 p-4 bg-white/80 backdrop-blur-sm border-2 border-gray-300 rounded-lg animate-slideDownAndFade data-[state=closed]:animate-slideUpAndFade shadow-md"
           align="end"
           sideOffset={8}
         >
