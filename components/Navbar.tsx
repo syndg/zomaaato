@@ -5,6 +5,7 @@ import Link from "next/link";
 
 const Navbar = async () => {
   const user = await getUserFromDb();
+  const dbUser = user?.dbUser;
 
   return (
     <header className="z-20 sticky top-0 bg-white/70 backdrop-blur-sm">
@@ -15,7 +16,7 @@ const Navbar = async () => {
             Clone
           </span>
         </Link>
-        <UserButton user={user} />
+        <UserButton user={dbUser} />
       </nav>
     </header>
   );
