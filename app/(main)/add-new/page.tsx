@@ -2,6 +2,7 @@ import { getUserFromDb } from "@/actions/getUserFromDb";
 import { PlusCircle } from "lucide-react";
 import { db } from "@/lib/db";
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 export default async function AddNew() {
   const user = await getUserFromDb();
@@ -20,13 +21,15 @@ export default async function AddNew() {
           You do not have any restaurants listed.
         </p>
         <div className="flex justify-center">
-          <Link
-            href="/add-new/register/1"
-            className="flex items-center gap-2 bg-zomato-red hover:bg-zomato-red/90 py-2 px-3 text-white sm:text-xl text-md rounded-lg transition-colors duration-200"
-          >
-            Add new
-            <PlusCircle size={22} />
-          </Link>
+          <Button size="sm" asChild>
+            <Link
+              href="/add-new/register/1"
+              className="text-xl rounded-lg font-semibold gap-2"
+            >
+              Add new
+              <PlusCircle size={22} />
+            </Link>
+          </Button>
         </div>
       </div>
     );

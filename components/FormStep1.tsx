@@ -11,7 +11,9 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { Loader2, ArrowRight } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import { useLocation } from "@/hooks/use-location";
 
 const formSchema = z.object({
@@ -69,7 +71,6 @@ const Formstep1 = ({ initialValues }: Formstep1Props) => {
     <Form {...form}>
       <div className="p-3">
         <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-5">
-          {isLoading && <div>Loading...</div>}
           <div className="text-lg px-3 py-8 bg-gray-100/50 border border-gray-200 rounded-md">
             <h2 className="font-bold text-2xl mb-4 leading-3 text-gray-600">
               Restaurant Details
@@ -151,22 +152,23 @@ const Formstep1 = ({ initialValues }: Formstep1Props) => {
               />
             </div>
 
-            <button
+            <Button
               onClick={getLocation}
               type="button"
-              className="py-1 px-2 mt-5 font-mono text-gray-600 font-bold rounded-md bg-gray-200 hover:bg-zomato-red hover:text-white transition-colors duration-200 border border-gray-300 active:scale-95"
+              size="sm"
+              variant="outline"
+              className="font-mono text-sm items-center mt-3 font-bold"
+              disabled={isLocationLoading}
             >
               Get Location
-            </button>
+            </Button>
           </div>
 
           <div className="flex justify-end">
-            <button
-              type="submit"
-              className="flex bg-zomato-red text-white text-xl px-3 py-2 font-semibold rounded-lg"
-            >
+            <Button type="submit" size="sm" className="text-xl font-semibold">
               Next
-            </button>
+              <ArrowRight size={22} className="" />
+            </Button>
           </div>
         </form>
       </div>
