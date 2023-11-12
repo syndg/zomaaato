@@ -5,10 +5,10 @@ export const useLocation = () => {
     lat: "",
     lng: "",
   });
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLocationLoading, setIsLocationLoading] = useState(false);
 
   const getLocation = () => {
-    setIsLoading(true);
+    setIsLocationLoading(true);
     navigator.geolocation.getCurrentPosition(
       (position) => {
         setLocation((prev) => ({
@@ -16,14 +16,14 @@ export const useLocation = () => {
           lat: position.coords.latitude.toString(),
           lng: position.coords.longitude.toString(),
         }));
-        setIsLoading(false);
+        setIsLocationLoading(false);
       },
       (error) => {
         console.log(error);
-        setIsLoading(false);
+        setIsLocationLoading(false);
       },
     );
   };
 
-  return { location, getLocation, isLoading };
+  return { location, getLocation, isLocationLoading };
 };

@@ -43,7 +43,7 @@ interface Formstep1Props {
 }
 
 const Formstep1 = ({ initialValues }: Formstep1Props) => {
-  const { location, getLocation, isLoading } = useLocation();
+  const { location, getLocation, isLocationLoading } = useLocation();
   const disabledCondition = location.lat !== "" && location.lng !== "";
 
   const form = useForm<FormValues>({
@@ -161,6 +161,9 @@ const Formstep1 = ({ initialValues }: Formstep1Props) => {
               disabled={isLocationLoading}
             >
               Get Location
+              {isLocationLoading && (
+                <Loader2 size={20} className="animate-spin ml-2" />
+              )}
             </Button>
           </div>
 
