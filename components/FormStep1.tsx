@@ -1,7 +1,7 @@
 "use client";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Form,
@@ -12,6 +12,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useLocation } from "@/hooks/use-location";
 
 const formSchema = z.object({
   name: z
@@ -40,10 +41,7 @@ interface Formstep1Props {
 }
 
 const Formstep1 = ({ initialValues }: Formstep1Props) => {
-  const [location, setLocation] = useState({
-    lat: "",
-    lng: "",
-  });
+  const { location, getLocation, isLoading } = useLocation();
   const disabledCondition = location.lat !== "" && location.lng !== "";
 
   const form = useForm<FormValues>({
@@ -55,20 +53,6 @@ const Formstep1 = ({ initialValues }: Formstep1Props) => {
       lng: "",
     },
   });
-
-  const getLocation = () => {
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        setLocation({
-          lat: position.coords.latitude.toString(),
-          lng: position.coords.longitude.toString(),
-        });
-      },
-      (error) => {
-        console.log(error);
-      },
-    );
-  };
 
   const { setValue } = form;
 
@@ -85,6 +69,7 @@ const Formstep1 = ({ initialValues }: Formstep1Props) => {
     <Form {...form}>
       <div className="p-3">
         <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-5">
+          {isLoading && <div>Loading...</div>}
           <div className="text-lg px-3 py-8 bg-gray-100/50 border border-gray-200 rounded-md">
             <h2 className="font-bold text-2xl mb-4 leading-3 text-gray-600">
               Restaurant Details
