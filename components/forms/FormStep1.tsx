@@ -1,8 +1,13 @@
 "use client";
 import { z } from "zod";
+import axios from "axios";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { useEffect } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useLocation } from "@/hooks/use-location";
+import { useRouter } from "next/navigation";
+import { toast } from "react-hot-toast";
+
 import {
   Form,
   FormControl,
@@ -14,7 +19,6 @@ import {
 import { Loader2, ArrowRight } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { useLocation } from "@/hooks/use-location";
 
 const formSchema = z.object({
   name: z
@@ -39,10 +43,12 @@ const formSchema = z.object({
 type FormValues = z.infer<typeof formSchema>;
 
 interface Formstep1Props {
-  initialValues: FormValues | null;
+  initialValues?: FormValues | null;
 }
 
 const Formstep1 = ({ initialValues }: Formstep1Props) => {
+  const router = useRouter();
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const { location, getLocation, isLocationLoading } = useLocation();
   const disabledCondition = location.lat !== "" && location.lng !== "";
 
@@ -59,12 +65,23 @@ const Formstep1 = ({ initialValues }: Formstep1Props) => {
   const { setValue } = form;
 
   useEffect(() => {
-    setValue("lat", location.lat);
-    setValue("lng", location.lng);
+    setValue("lat", initialValues?.lat || location.lat);
+    setValue("lng", initialValues?.lng || location.lng);
   }, [location]);
 
-  const onSubmit = (data: FormValues) => {
-    console.log(data);
+  const onSubmit = async (data: FormValues) => {
+    try {
+      setIsSubmitting(true);
+      await axios.post("/api/restaurants", data).then((res) => {
+        toast.success(`Restaurant "${res.data.name}" created`);
+        router.push(`/add-new/register/2?res_id=${res.data.id}`);
+      });
+      router.refresh();
+    } catch (err: any) {
+      console.log(err);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -168,9 +185,18 @@ const Formstep1 = ({ initialValues }: Formstep1Props) => {
           </div>
 
           <div className="flex justify-end">
-            <Button type="submit" size="sm" className="text-xl font-semibold">
+            <Button
+              type="submit"
+              size="sm"
+              className="text-xl font-semibold"
+              disabled={isSubmitting}
+            >
               Next
-              <ArrowRight size={22} className="" />
+              {isSubmitting ? (
+                <Loader2 size={22} className="animate-spin ml-2" />
+              ) : (
+                <ArrowRight size={22} />
+              )}
             </Button>
           </div>
         </form>

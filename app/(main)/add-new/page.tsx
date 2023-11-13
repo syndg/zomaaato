@@ -37,7 +37,16 @@ export default async function AddNew() {
 
   return (
     <div>
-      <h1>Admin</h1>
+      <h1>{restaurants.length} restaurants</h1>
+      <Button size="sm" asChild>
+        <Link
+          href="/add-new/register/1"
+          className="text-xl rounded-lg font-semibold gap-2"
+        >
+          Add new
+          <PlusCircle size={22} />
+        </Link>
+      </Button>
     </div>
   );
 }
