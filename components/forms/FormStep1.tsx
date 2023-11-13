@@ -8,17 +8,10 @@ import { useLocation } from "@/hooks/use-location";
 import { useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
 
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+import { Form } from "@/components/ui/form";
 import { Loader2, ArrowRight } from "lucide-react";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import CustomFormFieldInput from "@/components/forms/CustomFormField";
 
 const formSchema = z.object({
   name: z
@@ -88,47 +81,24 @@ const Formstep1 = ({ initialValues }: Formstep1Props) => {
     <Form {...form}>
       <div className="p-3">
         <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-5">
-          <div className="text-lg px-3 py-8 bg-gray-100/50 border border-gray-200 rounded-md">
-            <h2 className="font-bold text-2xl mb-4 leading-3 text-gray-600">
+          <div className="grid gap-3 text-lg px-3 py-8 bg-gray-100/50 border border-gray-200 rounded-md">
+            <h2 className="font-bold text-2xl mb-2 leading-3 text-gray-600">
               Restaurant Details
             </h2>
 
-            <FormField
-              control={form.control}
+            <CustomFormFieldInput
               name="name"
-              render={({ field }) => (
-                <FormItem>
-                  <div className="grid gap-2">
-                    <FormLabel className="font-semibold">Name</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Name of your restaurant" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </div>
-                </FormItem>
-              )}
+              label="Name"
+              control={form.control}
+              placeholerText="Name of your restaurant"
             />
 
-            <FormField
-              control={form.control}
+            <CustomFormFieldInput
               name="description"
-              render={({ field }) => (
-                <FormItem>
-                  <div className="grid mt-3 gap-2">
-                    <FormLabel className="font-semibold">
-                      Description{" "}
-                      <span className="text-sm font-normal">(Optional)</span>
-                    </FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="Describe your yummy restaurant!"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </div>
-                </FormItem>
-              )}
+              label="Description"
+              control={form.control}
+              placeholerText="Describe your yummy restaurant!"
+              optional
             />
           </div>
           <div className="text-lg px-3 py-8 bg-gray-100/50 border border-gray-200 rounded-md">
@@ -136,36 +106,18 @@ const Formstep1 = ({ initialValues }: Formstep1Props) => {
               Location Information
             </h2>
             <div className="grid grid-cols-2 gap-2">
-              <FormField
-                control={form.control}
+              <CustomFormFieldInput
                 name="lat"
-                render={({ field }) => (
-                  <FormItem>
-                    <div className="grid gap-2">
-                      <FormLabel className="font-semibold">Latitude</FormLabel>
-                      <FormControl>
-                        <Input {...field} disabled={disabledCondition} />
-                      </FormControl>
-                      <FormMessage />
-                    </div>
-                  </FormItem>
-                )}
+                label="Latitude"
+                control={form.control}
+                disabled={disabledCondition}
               />
 
-              <FormField
-                control={form.control}
+              <CustomFormFieldInput
                 name="lng"
-                render={({ field }) => (
-                  <FormItem>
-                    <div className="grid gap-2">
-                      <FormLabel className="font-semibold">Longitude</FormLabel>
-                      <FormControl>
-                        <Input {...field} disabled={disabledCondition} />
-                      </FormControl>
-                      <FormMessage />
-                    </div>
-                  </FormItem>
-                )}
+                label="Longitude"
+                control={form.control}
+                disabled={disabledCondition}
               />
             </div>
 
