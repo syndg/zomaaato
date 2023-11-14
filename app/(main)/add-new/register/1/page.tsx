@@ -1,5 +1,5 @@
 import Formstep1 from "@/components/forms/FormStep1";
-import { db } from "@/lib/db";
+import { getRestaurant } from "@/actions/getRestaurant";
 
 export default async function FormPage({
   searchParams,
@@ -12,11 +12,7 @@ export default async function FormPage({
     return <Formstep1 />;
   }
 
-  const restaurant = await db.restaurant.findUnique({
-    where: {
-      id: res_id,
-    },
-  });
+  const restaurant = await getRestaurant(res_id);
 
   return <Formstep1 initialValues={restaurant} />;
 }
