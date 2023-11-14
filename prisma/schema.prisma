@@ -22,14 +22,15 @@ model User {
 }
 
 model Restaurant {
-  id          String             @id @default(uuid())
+  id          String                  @id @default(uuid())
   name        String
   description String
   lat         String
   lng         String
   ownerId     String
-  owner       User               @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  owner       User                    @relation(fields: [ownerId], references: [id], onDelete: Cascade)
   images      RestaurantImages[]
+  timings     RestaurantTypeTimings[]
   reviews     Review[]
   items       Item[]
 
@@ -41,6 +42,25 @@ model RestaurantImages {
   imageUrl     String
   restaurantId String
   restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+
+  @@index([restaurantId])
+}
+
+enum RestaurantType {
+  DINEIN
+  DELIVERY
+  BOTH
+}
+
+model RestaurantTypeTimings {
+  id           String         @id @default(uuid())
+  days         String[]
+  timingSlots  String[]
+  type         RestaurantType
+  cuisines     String[]
+  categories   String[]
+  restaurantId String
+  restaurant   Restaurant     @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
 
   @@index([restaurantId])
 }
@@ -60,12 +80,18 @@ model Review {
   @@index([authorId, restaurantId])
 }
 
+enum ItemType {
+  VEG
+  NONVEG
+}
+
 model Item {
   id           String       @id @default(uuid())
   name         String
   price        Int
   description  String?
   imageUrl     String?
+  type         ItemType
   categoryId   String
   category     ItemCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   restaurantId String
