@@ -36,8 +36,10 @@ export default async function AddNew() {
   }
 
   return (
-    <div>
-      <h1>{restaurants.length} restaurants</h1>
+    <div className="h-[80vh] grid place-content-center">
+      <h1 className="text-xl font-bold">
+        You have {restaurants.length} restaurants.
+      </h1>
       <Button size="sm" asChild>
         <Link
           href="/add-new/register/1"

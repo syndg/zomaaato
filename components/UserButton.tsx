@@ -58,7 +58,7 @@ const UserButton = ({ user, className }: UserButtonProps) => {
       </Dropdown.Trigger>
       <Dropdown.Portal>
         <Dropdown.Content
-          className="max-w-[350px] z-30 p-4 bg-white/80 backdrop-blur-sm border-2 border-gray-300 rounded-lg animate-slideDownAndFade data-[state=closed]:animate-slideUpAndFade shadow-md"
+          className="max-w-[350px] z-30 p-4 bg-white/90 backdrop-blur-md border-2 border-gray-300 rounded-lg animate-slideDownAndFade data-[state=closed]:animate-slideUpAndFade shadow-md"
           align="end"
           sideOffset={8}
         >

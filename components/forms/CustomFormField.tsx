@@ -31,7 +31,7 @@ const CustomFormFieldInput = <
       render={({ field }) => (
         <FormItem>
           <div className="grid gap-2">
-            <FormLabel className="font-semibold">
+            <FormLabel className="font-semibold text-gray-600">
               {label}{" "}
               {optional && (
                 <span className="text-sm font-normal">(Optional)</span>
