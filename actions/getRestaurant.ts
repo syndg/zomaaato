@@ -9,3 +9,12 @@ export const getRestaurant = async (id: string) => {
 
   return restaurant;
 };
+
+export const getResTypeandTiming = async (resId: string) => {
+  const result = await db.restaurantTypeTimings.findFirst({
+    where: {
+      restaurantId: resId,
+    },
+  });
+  return result;
+};
