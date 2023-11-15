@@ -22,15 +22,15 @@ model User {
 }
 
 model Restaurant {
-  id          String                  @id @default(uuid())
+  id          String                 @id @default(uuid())
   name        String
   description String
   lat         String
   lng         String
   ownerId     String
-  owner       User                    @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  owner       User                   @relation(fields: [ownerId], references: [id], onDelete: Cascade)
   images      RestaurantImages[]
-  timings     RestaurantTypeTimings[]
+  timings     RestaurantTypeTimings?
   reviews     Review[]
   items       Item[]
 
@@ -59,7 +59,7 @@ model RestaurantTypeTimings {
   type         RestaurantType
   cuisines     String[]
   categories   String[]
-  restaurantId String
+  restaurantId String         @unique
   restaurant   Restaurant     @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
 
   @@index([restaurantId])
