@@ -7,12 +7,7 @@ export default async function FormPage({
   searchParams: { [res_id: string]: string };
 }) {
   const { res_id } = searchParams;
-
-  if (!res_id) {
-    return <Formstep1 />;
-  }
-
-  const restaurant = await getRestaurant(res_id);
+  const restaurant = await getRestaurant(res_id ? res_id : "");
 
   return <Formstep1 initialValues={restaurant} />;
 }

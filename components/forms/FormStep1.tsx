@@ -36,7 +36,7 @@ const formSchema = z.object({
 type FormValues = z.infer<typeof formSchema>;
 
 interface Formstep1Props {
-  initialValues?: FormValues | null;
+  initialValues: FormValues | null;
 }
 
 const Formstep1 = ({ initialValues }: Formstep1Props) => {
