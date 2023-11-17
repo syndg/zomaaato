@@ -5,25 +5,29 @@ export const useLocation = () => {
     lat: "",
     lng: "",
   });
+  const [permission, setPermission] = useState(true);
   const [isLocationLoading, setIsLocationLoading] = useState(false);
 
   const getLocation = () => {
     setIsLocationLoading(true);
+
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        setLocation((prev) => ({
-          ...prev,
+        setLocation({
           lat: position.coords.latitude.toString(),
           lng: position.coords.longitude.toString(),
-        }));
+        });
+        setPermission(true);
         setIsLocationLoading(false);
       },
       (error) => {
-        console.log(error);
+        if (error.code === error.PERMISSION_DENIED) {
+          setPermission(false);
+        }
         setIsLocationLoading(false);
       },
     );
   };
 
-  return { location, getLocation, isLocationLoading };
+  return { location, getLocation, permission, isLocationLoading };
 };

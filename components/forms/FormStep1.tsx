@@ -42,8 +42,10 @@ interface Formstep1Props {
 const Formstep1 = ({ initialValues }: Formstep1Props) => {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const { location, getLocation, isLocationLoading } = useLocation();
+  const { location, getLocation, permission, isLocationLoading } =
+    useLocation();
   const disabledCondition = location.lat !== "" && location.lng !== "";
+  console.log("component-rendered");
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -60,6 +62,7 @@ const Formstep1 = ({ initialValues }: Formstep1Props) => {
   useEffect(() => {
     setValue("lat", initialValues?.lat || location.lat);
     setValue("lng", initialValues?.lng || location.lng);
+    console.log("useEffect run");
   }, [location]);
 
   const onSubmit = async (data: FormValues) => {
@@ -120,20 +123,26 @@ const Formstep1 = ({ initialValues }: Formstep1Props) => {
                 disabled={disabledCondition}
               />
             </div>
-
-            <Button
-              onClick={getLocation}
-              type="button"
-              size="sm"
-              variant="outline"
-              className="font-mono text-sm items-center mt-3 font-bold"
-              disabled={isLocationLoading}
-            >
-              Get Location
-              {isLocationLoading && (
-                <Loader2 size={20} className="animate-spin ml-2" />
+            <div className="flex items-center gap-3 mt-3">
+              <Button
+                onClick={getLocation}
+                type="button"
+                size="sm"
+                variant="outline"
+                className="font-mono text-sm items-center font-bold"
+                disabled={isLocationLoading}
+              >
+                Get Location
+                {isLocationLoading && !disabledCondition && permission && (
+                  <Loader2 size={20} className="animate-spin ml-2" />
+                )}
+              </Button>
+              {!permission && (
+                <p className="text-red-500">
+                  You have denied access to your location.
+                </p>
               )}
-            </Button>
+            </div>
           </div>
 
           <div className="flex justify-end">
