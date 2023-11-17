@@ -45,7 +45,6 @@ const Formstep1 = ({ initialValues }: Formstep1Props) => {
   const { location, getLocation, permission, isLocationLoading } =
     useLocation();
   const disabledCondition = location.lat !== "" && location.lng !== "";
-  console.log("component-rendered");
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -69,10 +68,9 @@ const Formstep1 = ({ initialValues }: Formstep1Props) => {
     try {
       setIsSubmitting(true);
       await axios.post("/api/restaurants", data).then((res) => {
-        toast.success(`Restaurant "${res.data.name}" created`);
         router.push(`/add-new/register/2?res_id=${res.data.id}`);
+        toast.success(`Restaurant "${res.data.name}" created`);
       });
-      router.refresh();
     } catch (err: any) {
       console.log(err);
     } finally {
