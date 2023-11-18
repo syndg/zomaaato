@@ -11,7 +11,6 @@ export default async function FormPage({
   const { res_id } = searchParams;
   const restaurant = await getRestaurant(res_id);
   const resTypeandTiming = await getResTypeandTiming(res_id);
-  console.log(resTypeandTiming);
 
   if (!res_id || !restaurant) {
     redirect("/add-new/register/1");

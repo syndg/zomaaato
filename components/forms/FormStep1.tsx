@@ -11,7 +11,7 @@ import { toast } from "react-hot-toast";
 import { Form } from "@/components/ui/form";
 import { Loader2, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import CustomFormFieldInput from "@/components/forms/CustomFormField";
+import CustomInput from "@/components/forms/CustomInput";
 
 const formSchema = z.object({
   name: z
@@ -87,14 +87,14 @@ const Formstep1 = ({ initialValues }: Formstep1Props) => {
               Restaurant Details
             </h2>
 
-            <CustomFormFieldInput
+            <CustomInput
               name="name"
               label="Name"
               control={form.control}
               placeholerText="Name of your restaurant"
             />
 
-            <CustomFormFieldInput
+            <CustomInput
               name="description"
               label="Description"
               control={form.control}
@@ -107,14 +107,14 @@ const Formstep1 = ({ initialValues }: Formstep1Props) => {
               Location Information
             </h2>
             <div className="grid grid-cols-2 gap-2">
-              <CustomFormFieldInput
+              <CustomInput
                 name="lat"
                 label="Latitude"
                 control={form.control}
                 disabled={disabledCondition}
               />
 
-              <CustomFormFieldInput
+              <CustomInput
                 name="lng"
                 label="Longitude"
                 control={form.control}

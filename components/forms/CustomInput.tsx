@@ -15,7 +15,7 @@ type CustomFormFieldProps = {
   disabled?: boolean;
 };
 
-const CustomFormFieldInput = <
+const CustomInput = <
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
 >({
@@ -53,4 +53,4 @@ const CustomFormFieldInput = <
   );
 };
 
-export default CustomFormFieldInput;
+export default CustomInput;
