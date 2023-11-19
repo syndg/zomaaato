@@ -24,17 +24,17 @@ const CustomRadio = <
   return (
     <FormField
       render={({ field }) => (
-        <FormItem>
-          <FormLabel>{label}</FormLabel>
+        <FormItem className="grid gap-3">
+          <FormLabel className="font-semibold text-lg">{label}</FormLabel>
           <FormMessage />
           <FormControl>
             <RadioGroup
               onValueChange={field.onChange}
               defaultValue={field.value}
-              className="flex flex-col space-y-1"
+              className="grid"
             >
               {options.map((option) => (
-                <FormItem className="flex items-center gap-2">
+                <FormItem className="flex items-center gap-2 text-gray-800">
                   <FormControl>
                     <RadioGroupItem value={option.type} />
                   </FormControl>

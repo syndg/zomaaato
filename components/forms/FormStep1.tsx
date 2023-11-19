@@ -12,6 +12,7 @@ import { Form } from "@/components/ui/form";
 import { Loader2, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import CustomInput from "@/components/forms/CustomInput";
+import { FormCard } from "@/components/forms/form-card";
 
 const formSchema = z.object({
   name: z
@@ -82,7 +83,7 @@ const Formstep1 = ({ initialValues }: Formstep1Props) => {
     <Form {...form}>
       <div className="p-3">
         <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-5">
-          <div className="grid gap-3 text-lg px-3 py-8 bg-gray-100/50 border border-gray-200 rounded-md">
+          <FormCard className="grid gap-3 text-lg">
             <h2 className="font-bold text-2xl mb-2 leading-3 text-gray-800">
               Restaurant Details
             </h2>
@@ -101,8 +102,8 @@ const Formstep1 = ({ initialValues }: Formstep1Props) => {
               placeholerText="Describe your yummy restaurant!"
               optional
             />
-          </div>
-          <div className="text-lg px-3 py-8 bg-gray-100/50 border border-gray-200 rounded-md">
+          </FormCard>
+          <FormCard className="grid text-lg">
             <h2 className="font-bold text-gray-800 text-2xl mb-5 leading-3">
               Location Information
             </h2>
@@ -141,8 +142,7 @@ const Formstep1 = ({ initialValues }: Formstep1Props) => {
                 </p>
               )}
             </div>
-          </div>
-
+          </FormCard>
           <div className="flex justify-end">
             <Button
               type="submit"

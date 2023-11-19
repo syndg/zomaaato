@@ -31,12 +31,13 @@ const CustomCheckbox = <
     <FormField
       name={name}
       render={() => (
-        <FormItem>
-          <div className="mb-4">
-            <FormLabel className="text-base">{label}</FormLabel>
+        <FormItem className="grid gap-4">
+          <div>
+            <FormLabel className="font-semibold text-lg">{label}</FormLabel>
             {description && <FormDescription>{description}</FormDescription>}
           </div>
-          <div className="grid grid-cols-3 gap-2">
+          <FormMessage />
+          <div className="grid grid-cols-2 gap-3 text-gray-800">
             {items.map((item) => (
               <FormField
                 key={item}
@@ -68,7 +69,6 @@ const CustomCheckbox = <
               />
             ))}
           </div>
-          <FormMessage />
         </FormItem>
       )}
       {...props}
