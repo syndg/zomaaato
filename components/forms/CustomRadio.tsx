@@ -34,7 +34,10 @@ const CustomRadio = <
               className="grid"
             >
               {options.map((option) => (
-                <FormItem className="flex items-center gap-2 text-gray-800">
+                <FormItem
+                  key={option.type}
+                  className="flex items-center gap-2 text-gray-800"
+                >
                   <FormControl>
                     <RadioGroupItem value={option.type} />
                   </FormControl>

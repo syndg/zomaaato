@@ -13,6 +13,7 @@ import { Loader2, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import CustomInput from "@/components/forms/CustomInput";
 import { FormCard } from "@/components/forms/form-card";
+import { Restaurant } from "@prisma/client";
 
 const formSchema = z.object({
   name: z
@@ -37,7 +38,7 @@ const formSchema = z.object({
 type FormValues = z.infer<typeof formSchema>;
 
 interface Formstep1Props {
-  initialValues: FormValues | null;
+  initialValues: Restaurant | null;
 }
 
 const Formstep1 = ({ initialValues }: Formstep1Props) => {
@@ -62,12 +63,22 @@ const Formstep1 = ({ initialValues }: Formstep1Props) => {
   useEffect(() => {
     setValue("lat", initialValues?.lat || location.lat);
     setValue("lng", initialValues?.lng || location.lng);
-    console.log("useEffect run");
   }, [location]);
 
   const onSubmit = async (data: FormValues) => {
     try {
       setIsSubmitting(true);
+
+      if (initialValues) {
+        await axios
+          .patch(`/api/restaurants/${initialValues.id}`, data)
+          .then((res) => {
+            router.push(`/add-new/register/2?res_id=${res.data.id}`);
+            toast.success("Updated successfully");
+          });
+        return;
+      }
+
       await axios.post("/api/restaurants", data).then((res) => {
         router.push(`/add-new/register/2?res_id=${res.data.id}`);
         toast.success(`Restaurant "${res.data.name}" created`);
