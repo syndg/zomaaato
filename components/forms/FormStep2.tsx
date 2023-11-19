@@ -1,6 +1,6 @@
 "use client";
-import { z } from "zod";
 import axios from "axios";
+import { ZodError, z } from "zod";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -12,7 +12,6 @@ import { Form, FormLabel } from "@/components/ui/form";
 import CustomSelect from "./CustomSelect";
 import CustomRadio from "@/components/forms/CustomRadio";
 import CustomCheckbox from "@/components/forms/CustomCheckbox";
-import { Button } from "@/components/ui/button";
 import {
   resCategories,
   cuisines,
@@ -21,6 +20,7 @@ import {
   timeOptions,
 } from "@/lib/constants";
 import { FormCard } from "./form-card";
+import { FormNavigation } from "./form-nav";
 
 const formSchema = z.object({
   type: z.enum(["DINEIN", "DELIVERY", "BOTH"], {
@@ -59,6 +59,7 @@ interface FormStep2Props {
 const FormStep2 = ({ resId, initialValues }: FormStep2Props) => {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
+
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: initialValues || {
@@ -71,6 +72,27 @@ const FormStep2 = ({ resId, initialValues }: FormStep2Props) => {
   const onSubmit = async (data: FormValues) => {
     try {
       setIsSubmitting(true);
+
+      if (data.open === data.close) {
+        throw new ZodError([
+          {
+            code: "custom",
+            message: "Open and close time cannot be the same",
+            path: ["open"],
+          },
+        ]);
+      }
+
+      if (initialValues) {
+        await axios
+          .patch(`/api/restaurants/${resId}/resTypeandTime`, data)
+          .then((res) => {
+            router.push(`/add-new/register/3?res_id=${res.data.restaurantId}`);
+            toast.success("Updated successfully");
+          });
+        return;
+      }
+
       await axios
         .post(`/api/restaurants/${resId}/resTypeandTime`, data)
         .then((res) => {
@@ -78,7 +100,11 @@ const FormStep2 = ({ resId, initialValues }: FormStep2Props) => {
           toast.success("Submitted successfully");
         });
     } catch (err: any) {
+      if (err instanceof ZodError) {
+        return toast.error(err.issues[0].message);
+      }
       console.log(err);
+      toast.error(err.response.data);
     } finally {
       setIsSubmitting(false);
     }
@@ -90,6 +116,7 @@ const FormStep2 = ({ resId, initialValues }: FormStep2Props) => {
         <FormLabel className="text-2xl font-bold">
           Restaurant Type and Timings
         </FormLabel>
+
         <FormCard>
           <CustomRadio
             control={form.control}
@@ -148,8 +175,7 @@ const FormStep2 = ({ resId, initialValues }: FormStep2Props) => {
             description="Select the days your establishment is open."
           />
         </FormCard>
-
-        <Button type="submit">Submit</Button>
+        <FormNavigation loading={isSubmitting} />
       </form>
     </Form>
   );
