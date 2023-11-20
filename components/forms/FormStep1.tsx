@@ -95,7 +95,7 @@ const Formstep1 = ({ initialValues }: Formstep1Props) => {
       <div className="p-3">
         <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-5">
           <FormCard className="grid gap-3 text-lg">
-            <h2 className="font-bold text-2xl mb-2 leading-3 text-gray-800">
+            <h2 className="font-bold text-xl mb-2 leading-3 text-gray-800">
               Restaurant Details
             </h2>
 
@@ -115,7 +115,7 @@ const Formstep1 = ({ initialValues }: Formstep1Props) => {
             />
           </FormCard>
           <FormCard className="grid text-lg">
-            <h2 className="font-bold text-gray-800 text-2xl mb-5 leading-3">
+            <h2 className="font-bold text-gray-800 text-xl mb-5 leading-3">
               Location Information
             </h2>
             <div className="grid grid-cols-2 gap-2">

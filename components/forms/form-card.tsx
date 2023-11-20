@@ -10,7 +10,7 @@ export const FormCard = ({
   return (
     <div
       className={cn(
-        "px-3 py-8 bg-gray-100/80 rounded-md border border-gray-200",
+        "px-3 py-5 bg-gray-100/80 rounded-md border border-gray-200",
         className,
       )}
     >
