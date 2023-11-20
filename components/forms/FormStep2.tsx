@@ -112,7 +112,10 @@ const FormStep2 = ({ resId, initialValues }: FormStep2Props) => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 p-3">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="grid gap-3 mb-12 p-3"
+      >
         <FormLabel className="text-2xl font-bold">
           Restaurant Type and Timings
         </FormLabel>

@@ -16,9 +16,5 @@ export const getUserFromDb = async () => {
     },
   });
 
-  if (!dbUser) {
-    throw new Error("User not found");
-  }
-
   return { id, dbUser };
 };

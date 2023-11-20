@@ -14,7 +14,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 interface UserButtonProps {
-  user?: User;
+  user?: User | null;
   className?: string; // for styling the trigger only.
 }
 
