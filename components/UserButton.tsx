@@ -8,17 +8,18 @@ import {
   UserCircle2,
   LogOut,
 } from "lucide-react";
-import { User } from "@prisma/client";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
+import { useUser } from "@clerk/nextjs";
 
-interface UserButtonProps {
-  user?: User | null;
-  className?: string; // for styling the trigger only.
-}
+type UserButtonProps = {
+  className?: string;
+};
 
-const UserButton = ({ user, className }: UserButtonProps) => {
+const UserButton = ({ className }: UserButtonProps) => {
+  const user = useUser().user;
+
   if (!user) {
     return (
       <Link
@@ -41,10 +42,10 @@ const UserButton = ({ user, className }: UserButtonProps) => {
           )}
         >
           <span className="font-semibold text-lg text-gray-800">
-            {user?.name.split(" ")[0]}
+            {user?.fullName?.split(" ")[0]}
           </span>
           <Image
-            src={user?.imageUrl as string}
+            src={user?.imageUrl}
             alt="User Image"
             width={25}
             height={25}
@@ -71,8 +72,12 @@ const UserButton = ({ user, className }: UserButtonProps) => {
               className="rounded-full"
             />
             <div className="flex flex-col text-sm leading-4">
-              <span className="font-semibold text-gray-800">{user?.name}</span>
-              <span className="text-zomato-red">{user?.email}</span>
+              <span className="font-semibold text-gray-800">
+                {user?.fullName}
+              </span>
+              <span className="text-zomato-red">
+                {user?.emailAddresses[0].emailAddress}
+              </span>
             </div>
           </div>
           <Dropdown.Separator className="h-[1px] bg-gray-300 mt-3" />
