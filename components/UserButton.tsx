@@ -12,6 +12,7 @@ import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 import { useUser } from "@clerk/nextjs";
+import { Loader2 } from "lucide-react";
 
 type UserButtonProps = {
   className?: string;
@@ -19,6 +20,15 @@ type UserButtonProps = {
 
 const UserButton = ({ className }: UserButtonProps) => {
   const user = useUser().user;
+  const isLoading = useUser().isLoaded;
+
+  if (!isLoading) {
+    return (
+      <div className="flex items-center gap-1 py-1 px-3 rounded-md text-gray-800 border-2 border-gray-200 focus:outline-none">
+        <Loader2 size={28} className="animate-spin" />
+      </div>
+    );
+  }
 
   if (!user) {
     return (
