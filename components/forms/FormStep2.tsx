@@ -136,6 +136,7 @@ const FormStep2 = ({ resId, initialValues }: FormStep2Props) => {
             items={resCategories}
             label="Categories"
             description="Select up to 2 best choices."
+            maxSelections={2}
           />
         </FormCard>
 
@@ -146,6 +147,8 @@ const FormStep2 = ({ resId, initialValues }: FormStep2Props) => {
             items={cuisines}
             label="Cuisines"
             description="Select up to 2 best choices."
+            maxSelections={2}
+            scroll
           />
         </FormCard>
 
