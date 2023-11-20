@@ -1,12 +1,11 @@
-import { getUserFromDb } from "@/actions/getUserFromDb";
+import { currentUser } from "@clerk/nextjs";
 import { PlusCircle } from "lucide-react";
 import { db } from "@/lib/db";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
 export default async function AddNew() {
-  const user = await getUserFromDb();
-  const id = user?.id;
+  const id = (await currentUser())?.id;
 
   const restaurants = await db.restaurant.findMany({
     where: {
