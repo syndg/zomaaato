@@ -5,6 +5,9 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { cn } from "@/lib/utils";
 import NextTopLoader from "nextjs-toploader";
 import { Toaster } from "react-hot-toast";
+import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
+import { extractRouterConfig } from "uploadthing/server";
+import { ourFileRouter } from "@/app/api/uploadthing/core";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -25,6 +28,7 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body className={cn(poppins.className, "relative")}>
+          <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
           <NextTopLoader
             height={4}
             color="rgb(239, 79, 95)"

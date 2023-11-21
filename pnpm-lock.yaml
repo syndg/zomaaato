@@ -35,6 +35,9 @@ dependencies:
   '@radix-ui/react-slot':
     specifier: ^1.0.2
     version: 1.0.2(@types/react@18.2.37)(react@18.2.0)
+  '@uploadthing/react':
+    specifier: ^6.0.1
+    version: 6.0.1(next@14.0.1)(react@18.2.0)(uploadthing@6.0.2)
   axios:
     specifier: ^1.6.2
     version: 1.6.2
@@ -77,6 +80,9 @@ dependencies:
   tailwindcss-animate:
     specifier: ^1.0.7
     version: 1.0.7(tailwindcss@3.3.5)
+  uploadthing:
+    specifier: ^6.0.2
+    version: 6.0.2
   zod:
     specifier: ^3.22.4
     version: 3.22.4
@@ -1590,6 +1596,42 @@ packages:
     resolution: {integrity: sha512-zuVdFrMJiuCDQUMCzQaD6KL28MjnqqN8XnAqiEq9PNm/hCPTSGfrXCOfwj1ow4LFb/tNymJPwsNbVePc1xFqrQ==}
     dev: true
 
+  /@uploadthing/mime-types@0.2.2:
+    resolution: {integrity: sha512-ZUo1JHOPPMZDsUw1mOhhVDIvJGlsjj6T0xJ/YJtulyJwL43S9B5pxg1cHcRuTEgjaxj7B55jiqQ6r9mDrrjH9A==}
+    dev: false
+
+  /@uploadthing/react@6.0.1(next@14.0.1)(react@18.2.0)(uploadthing@6.0.2):
+    resolution: {integrity: sha512-IJHAdEYV66QXvd3/GMQaWr7ZJncZAVWvBhxg9UhE/b3qn651aJWnHBPgo2Q7W9R4t3ITua+/5cN7n0EpP00dhg==}
+    peerDependencies:
+      next: 14.0.1
+      react: ^17.0.2 || ^18.0.0
+      uploadthing: ^6.0.0
+    peerDependenciesMeta:
+      next:
+        optional: true
+    dependencies:
+      '@uploadthing/shared': 6.0.1(@uploadthing/mime-types@0.2.2)
+      attr-accept: 2.2.2
+      file-selector: 0.6.0
+      next: 14.0.1(@babel/core@7.23.3)(react-dom@18.2.0)(react@18.2.0)
+      react: 18.2.0
+      tailwind-merge: 1.14.0
+      uploadthing: 6.0.2
+    transitivePeerDependencies:
+      - '@uploadthing/mime-types'
+    dev: false
+
+  /@uploadthing/shared@6.0.1(@uploadthing/mime-types@0.2.2):
+    resolution: {integrity: sha512-ZdeTj77MU1zi5mhLzlYa5jUCUxXJqK4+sd9lgZZ6pIWN9tK5Xs0MptF3orqZH/RzIir6aqpsI9OaSd/BamHDxQ==}
+    peerDependencies:
+      '@uploadthing/mime-types': ^0.2.2
+    peerDependenciesMeta:
+      '@uploadthing/mime-types':
+        optional: true
+    dependencies:
+      '@uploadthing/mime-types': 0.2.2
+    dev: false
+
   /acorn-jsx@5.3.2(acorn@8.11.2):
     resolution: {integrity: sha512-rq9s+JNhf0IChjtDXxllJ7g41oZk5SlXtp0LHwyA5cejwn7vKmKp4pPri6YEePv2PU65sAsegbXtIinmDFDXgQ==}
     peerDependencies:
@@ -1760,6 +1802,11 @@ packages:
 
   /asynckit@0.4.0:
     resolution: {integrity: sha512-Oei9OH4tRh0YqU3GxhX79dM/mwVgvbZJaSNaRk+bshkj0S5cfHcgYakreBjrHwatXKbz+IoIdYLxrKim2MjW0Q==}
+    dev: false
+
+  /attr-accept@2.2.2:
+    resolution: {integrity: sha512-7prDjvt9HmqiZ0cl5CRjtS84sEyhsHP2coDkaZKRKVfCDo9s7iw7ChVmar78Gu9pC4SoR/28wFu/G5JJhTnqEg==}
+    engines: {node: '>=4'}
     dev: false
 
   /autoprefixer@10.4.16(postcss@8.4.31):
@@ -2552,6 +2599,13 @@ packages:
     dependencies:
       flat-cache: 3.2.0
     dev: true
+
+  /file-selector@0.6.0:
+    resolution: {integrity: sha512-QlZ5yJC0VxHxQQsQhXvBaC7VRJ2uaxTf+Tfpu4Z/OcVQJVpZO+DGU0rkoVW5ce2SccxugvpBJoMvUs59iILYdw==}
+    engines: {node: '>= 12'}
+    dependencies:
+      tslib: 2.6.2
+    dev: false
 
   /fill-range@7.0.1:
     resolution: {integrity: sha512-qOo9F+dMUmC2Lcb4BbVvnKJxTPjCm+RRpe4gDuGrzkL7mEVl/djYSu2OdQ2Pa302N4oqkSg9ir6jaLWJ2USVpQ==}
@@ -4074,6 +4128,10 @@ packages:
       use-sync-external-store: 1.2.0(react@18.2.0)
     dev: false
 
+  /tailwind-merge@1.14.0:
+    resolution: {integrity: sha512-3mFKyCo/MBcgyOTlrY8T7odzZFx+w+qKSMAmdFzRvqBfLlSigU6TZnlFHK0lkMwj9Bj8OYU+9yW9lmGuS0QEnQ==}
+    dev: false
+
   /tailwind-merge@2.0.0:
     resolution: {integrity: sha512-WO8qghn9yhsldLSg80au+3/gY9E4hFxIvQ3qOmlpXnqpDKoMruKfi/56BbbMg6fHTQJ9QD3cc79PoWqlaQE4rw==}
     dependencies:
@@ -4280,6 +4338,14 @@ packages:
       browserslist: 4.22.1
       escalade: 3.1.1
       picocolors: 1.0.0
+
+  /uploadthing@6.0.2:
+    resolution: {integrity: sha512-wJPlgUCQC6hoLQ1rVWbFSGhyNBs5NCohQqWmD8MAaM5sxupLeCl5bQZ1vJLonDgpaErM9ejyMvphb7aH/AkNvw==}
+    engines: {node: '>=18.13.0'}
+    dependencies:
+      '@uploadthing/mime-types': 0.2.2
+      '@uploadthing/shared': 6.0.1(@uploadthing/mime-types@0.2.2)
+    dev: false
 
   /uri-js@4.4.1:
     resolution: {integrity: sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==}
