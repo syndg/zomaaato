@@ -76,13 +76,12 @@ const Formstep1 = ({ initialValues }: Formstep1Props) => {
             router.push(`/add-new/register/2?res_id=${res.data.id}`);
             toast.success("Updated successfully");
           });
-        return;
+      } else {
+        await axios.post("/api/restaurants", data).then((res) => {
+          router.push(`/add-new/register/2?res_id=${res.data.id}`);
+          toast.success(`Restaurant "${res.data.name}" created`);
+        });
       }
-
-      await axios.post("/api/restaurants", data).then((res) => {
-        router.push(`/add-new/register/2?res_id=${res.data.id}`);
-        toast.success(`Restaurant "${res.data.name}" created`);
-      });
     } catch (err: any) {
       console.log(err);
     } finally {

@@ -90,15 +90,14 @@ const FormStep2 = ({ resId, initialValues }: FormStep2Props) => {
             router.push(`/add-new/register/3?res_id=${res.data.restaurantId}`);
             toast.success("Updated successfully");
           });
-        return;
+      } else {
+        await axios
+          .post(`/api/restaurants/${resId}/resTypeandTime`, data)
+          .then((res) => {
+            router.push(`/add-new/register/3?res_id=${res.data.restaurantId}`);
+            toast.success("Submitted successfully");
+          });
       }
-
-      await axios
-        .post(`/api/restaurants/${resId}/resTypeandTime`, data)
-        .then((res) => {
-          router.push(`/add-new/register/3?res_id=${res.data.restaurantId}`);
-          toast.success("Submitted successfully");
-        });
     } catch (err: any) {
       if (err instanceof ZodError) {
         return toast.error(err.issues[0].message);
