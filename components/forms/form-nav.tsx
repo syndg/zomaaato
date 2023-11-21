@@ -21,7 +21,7 @@ export const FormNavigation = ({ loading }: { loading?: boolean }) => {
 
   return (
     <div className="fixed left-0 bottom-0 w-full bg-white/70 backdrop-blur-sm border-t border-gray-300 md:border-none md:bg-none md:static">
-      <div className="max-w-[1200px] mx-auto flex justify-between px-5 py-2">
+      <div className="max-w-[1200px] mx-auto flex justify-between px-5 py-3">
         <Button
           type="button"
           variant="outline"

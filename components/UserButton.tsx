@@ -15,15 +15,15 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import { cn } from "@/lib/utils";
-import Image from "next/image";
-import Link from "next/link";
 import { useUser } from "@clerk/nextjs";
 import { Loader2 } from "lucide-react";
 import { Button } from "./ui/button";
 import { SignOutButton } from "@clerk/nextjs";
+import Image from "next/image";
+import Link from "next/link";
 
 type UserButtonProps = {
-  className?: string;
+  className?: string; // for styling the trigger.
 };
 
 const UserButton = ({ className }: UserButtonProps) => {
@@ -55,7 +55,10 @@ const UserButton = ({ className }: UserButtonProps) => {
       <DropdownMenuTrigger asChild>
         <Button
           variant="outline"
-          className="group flex gap-1 border-2 data-[state=open]:bg-muted"
+          className={cn(
+            "group flex gap-1 border-2 data-[state=open]:bg-muted",
+            className,
+          )}
         >
           <span className="font-semibold text-lg text-gray-800">
             {user?.fullName?.split(" ")[0]}

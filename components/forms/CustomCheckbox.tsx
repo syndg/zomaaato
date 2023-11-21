@@ -57,7 +57,7 @@ const CustomCheckbox = <
                     </span>
                   ))}
                   <button
-                    className="border border-gray-400 rounded-full text-gray-400 ml-2"
+                    className="border border-gray-400 rounded-full text-gray-400 ml-2 hover:text-primary hover:border-primary"
                     onClick={() => field.onChange([])}
                   >
                     <X size={18} />
