@@ -35,7 +35,7 @@ const CustomSelect = <
       render={({ field }) => (
         <FormItem className="grid gap-1">
           <FormLabel className="text-sm">{label}</FormLabel>
-          <Select onValueChange={field.onChange}>
+          <Select onValueChange={field.onChange} defaultValue={field.value}>
             <FormControl>
               <SelectTrigger>
                 <SelectValue placeholder={placeholderText} />

@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "react-hot-toast";
 
-import { RestaurantTypeTimings } from "@prisma/client";
+import { Prisma, RestaurantTypeTimings } from "@prisma/client";
 import { Form, FormLabel } from "@/components/ui/form";
 import CustomSelect from "./CustomSelect";
 import CustomRadio from "@/components/forms/CustomRadio";
@@ -56,16 +56,34 @@ interface FormStep2Props {
   initialValues: RestaurantTypeTimings | null;
 }
 
+interface DefValues extends RestaurantTypeTimings {
+  open: string;
+  close: string;
+}
+
 const FormStep2 = ({ resId, initialValues }: FormStep2Props) => {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  let defValues: DefValues | null = null;
+  const timings = initialValues?.timingSlots as Prisma.JsonObject;
+
+  if (initialValues !== null) {
+    defValues = {
+      ...initialValues,
+      open: timings?.open as string,
+      close: timings?.close as string,
+    };
+  }
+
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
-    defaultValues: initialValues || {
+    defaultValues: defValues || {
       cuisines: [],
       categories: [],
-      days: [],
+      days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      open: "",
+      close: "",
     },
   });
 
