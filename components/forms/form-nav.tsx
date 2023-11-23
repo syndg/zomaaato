@@ -2,6 +2,7 @@
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { Loader2, ArrowRight, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export const FormNavigation = ({ loading }: { loading?: boolean }) => {
   const router = useRouter();
@@ -19,6 +20,12 @@ export const FormNavigation = ({ loading }: { loading?: boolean }) => {
     }
   };
 
+  const onClickNext = () => {
+    if (currentPage === "3") {
+      router.push("/add-new");
+    }
+  };
+
   return (
     <div className="fixed left-0 bottom-0 w-full bg-white/70 backdrop-blur-sm border-t border-gray-300 md:border-none md:bg-none md:static">
       <div className="max-w-[1200px] mx-auto flex justify-between px-5 py-3">
@@ -32,19 +39,32 @@ export const FormNavigation = ({ loading }: { loading?: boolean }) => {
           <ArrowLeft size={22} />
           Back
         </Button>
-        <Button
-          type="submit"
-          size="sm"
-          className="text-xl font-semibold"
-          disabled={loading}
-        >
-          Next
-          {loading ? (
-            <Loader2 size={22} className="animate-spin ml-2" />
-          ) : (
-            <ArrowRight size={22} />
-          )}
-        </Button>
+        {currentPage === "3" ? (
+          <Link href="/add-new">
+            <Button
+              size="sm"
+              className="text-xl font-semibold"
+              disabled={loading}
+            >
+              Next
+              <ArrowRight size={22} />
+            </Button>
+          </Link>
+        ) : (
+          <Button
+            type="submit"
+            size="sm"
+            className="text-xl font-semibold"
+            disabled={loading}
+          >
+            Next
+            {loading ? (
+              <Loader2 size={22} className="animate-spin ml-2" />
+            ) : (
+              <ArrowRight size={22} />
+            )}
+          </Button>
+        )}
       </div>
     </div>
   );

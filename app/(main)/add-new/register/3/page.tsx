@@ -18,10 +18,5 @@ export default async function FormPage3({
   if (!res_id) {
     redirect("/add-new/register/1");
   }
-  return (
-    <div>
-      <ImageUploader resId={res_id} dbImages={resImages} />
-      <FormNavigation />
-    </div>
-  );
+  return <ImageUploader resId={res_id} dbImages={resImages} />;
 }
