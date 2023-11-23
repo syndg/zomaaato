@@ -8,13 +8,15 @@ export default function FormPage1Layout({
   return (
     <div className="grid md:grid-cols-2 gap-12">
       {children}
-      <div className="relative">
-        <Image
-          src="/form1.jpg"
-          className="scale-95"
-          alt="Picture of a cafe/restaurant."
-          fill
-        />
+      <div className="grid place-content-center">
+        <div className="hidden md:block relative w-[500px] h-[500px]">
+          <Image
+            src="/form1.jpg"
+            className="scale-95"
+            alt="Picture of a cafe/restaurant."
+            fill
+          />
+        </div>
       </div>
     </div>
   );
