@@ -2,6 +2,9 @@ import { createResImages } from "@/actions/createResImages";
 import { auth } from "@clerk/nextjs";
 import { createUploadthing, type FileRouter } from "uploadthing/next";
 import { z } from "zod";
+import { UTApi } from "uploadthing/server";
+
+export const utapi = new UTApi();
 
 const f = createUploadthing();
 
