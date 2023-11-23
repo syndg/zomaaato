@@ -1,44 +1,34 @@
-import { currentUser } from "@clerk/nextjs";
+import { createResImages } from "@/actions/createResImages";
+import { auth } from "@clerk/nextjs";
 import { createUploadthing, type FileRouter } from "uploadthing/next";
 import { z } from "zod";
 
 const f = createUploadthing();
 
+const authCheck = () => {
+  const { userId } = auth();
+  if (!userId) {
+    throw new Error("Unauthorized");
+  }
+  return userId;
+};
+
 export const ourFileRouter = {
   imageUploader: f({ image: { maxFileSize: "2MB" } })
     .input(z.string())
-    .middleware(async ({ req, input }) => {
-      const user = await currentUser();
-      if (!user) {
-        throw new Error("Unauthorized");
-      }
-      console.log(req.url);
-      console.log("INPUT", input);
+    .middleware(({ req, input }) => {
+      const userId = authCheck();
 
-      return { userId: user.id };
+      return { userId, resId: input };
     })
     .onUploadComplete(async ({ metadata, file }) => {
-      console.log("Upload complete for userId:", metadata.userId);
-      console.log("file url", file.url);
-      console.log("file name", file.name);
+      const imgData = await createResImages(metadata.resId, file.url, file.key);
 
-      return { uploadedBy: metadata.userId, url: file.url };
-    }),
-
-  multipleImages: f({
-    image: { maxFileCount: 3, maxFileSize: "2MB" },
-  })
-    .middleware(async ({ req }) => {
-      const user = await currentUser();
-      if (!user) {
-        throw new Error("Unauthorized");
+      if (!imgData) {
+        throw new Error("Database upload failed.");
       }
 
-      return { userId: user.id };
-    })
-    .onUploadComplete(async ({ metadata, file }) => {
-      console.log("FILE", file);
-      return { uploadedBy: metadata.userId };
+      return { uploadedBy: metadata.userId, ...imgData };
     }),
 } satisfies FileRouter;
 

@@ -1,30 +1,27 @@
-"use client";
-
-import { UploadButton } from "@/lib/uploadthing";
-
+import ImageUploader from "@/components/ImageUploader";
+import { db } from "@/lib/db";
 import { FormNavigation } from "@/components/forms/form-nav";
-export default function FormPage3() {
+import { redirect } from "next/navigation";
+
+export default async function FormPage3({
+  searchParams,
+}: {
+  searchParams: { [res_id: string]: string };
+}) {
+  const { res_id } = searchParams;
+  const resImages = await db.restaurantImages.findMany({
+    where: {
+      restaurantId: res_id,
+    },
+  });
+
+  if (!res_id) {
+    redirect("/add-new/register/1");
+  }
   return (
     <div>
-      <h1>Form Page 3</h1>
+      <ImageUploader resId={res_id} dbImages={resImages} />
       <FormNavigation />
-      <UploadButton
-        className="ut-button:bg-primary"
-        endpoint="imageUploader"
-        onClientUploadComplete={(res) => {
-          console.log("URL", res[0].url);
-        }}
-        onUploadError={(err: Error) => {
-          console.log("Error: ", err);
-        }}
-        input="yo"
-      />
-      <UploadButton
-        endpoint="multipleImages"
-        onClientUploadComplete={(res) => {
-          res.map((img) => console.log("URL: ", img.url));
-        }}
-      />
     </div>
   );
 }
