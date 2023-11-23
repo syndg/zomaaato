@@ -45,27 +45,28 @@ const ImageUploader = ({
   return (
     <div
       className={cn(
-        "grid h-[80vh] place-content-center gap-2",
+        "flex flex-col justify-center items-center h-[80vh] place-content-center gap-2",
         images.length > 0 && "gap-12",
       )}
     >
       {images.length === 0 && !isUploading && (
-        <h1 className="text-xl md:text-2xl font-semibold">
+        <h1 className="text-md md:text-2xl font-semibold">
           You have not uploaded any images
         </h1>
       )}
-      <div className={`grid grid-cols-${images.length} gap-2`}>
+      <div className={`flex gap-2 flex-wrap`}>
         {images.map((image) => (
           <div
             key={image.utKey}
-            className="relative grid place-content-center rounded-lg"
+            className="relative mx-auto w-32 h-32 md:h-52 md:w-52 lg:w-60 lg:h-60 rounded-lg"
           >
             <Image
               src={image.imageUrl}
               alt="Uploaded restaurant image"
-              width={300}
-              height={300}
               className="border-2 border-gray-300 rounded-md"
+              fill
+              sizes="20vw"
+              objectFit="cover"
             />
             <button
               onClick={() => handleDelete(image.utKey, image.id)}
