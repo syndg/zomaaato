@@ -15,6 +15,7 @@ const StepVisualizer = ({ totalSteps }: StepVisualizerProps) => {
     <div className="flex w-full max-w-[700px] justify-center mx-auto gap-4 py-2 border border-gray-400/80 rounded-full">
       {range(1, totalSteps + 1).map((s) => (
         <Step
+          key={s}
           step={s}
           currentStep={Number(currentPath)}
           totalSteps={totalSteps}
