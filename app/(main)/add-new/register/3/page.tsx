@@ -1,6 +1,5 @@
-import ImageUploader from "@/components/ImageUploader";
+import ResImageUploader from "@/components/ResImageUploader";
 import { db } from "@/lib/db";
-import { FormNavigation } from "@/components/forms/form-nav";
 import { redirect } from "next/navigation";
 
 export default async function FormPage3({
@@ -18,5 +17,5 @@ export default async function FormPage3({
   if (!res_id) {
     redirect("/add-new/register/1");
   }
-  return <ImageUploader resId={res_id} dbImages={resImages} />;
+  return <ResImageUploader resId={res_id} dbImages={resImages} />;
 }

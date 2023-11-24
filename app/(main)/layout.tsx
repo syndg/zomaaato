@@ -6,9 +6,9 @@ export default function HomeLayout({
   children: React.ReactNode;
 }) {
   return (
-    <>
+    <div className="min-h-[100svh]">
       <Navbar />
-      <div className="max-w-[1200px] mx-auto">{children}</div>
-    </>
+      <main className="max-w-[1200px] mx-auto">{children}</main>
+    </div>
   );
 }

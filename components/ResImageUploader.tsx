@@ -14,17 +14,17 @@ type Img = {
   id: string;
 };
 
-interface ImageUploaderProps {
+interface ResImageUploaderProps {
   resId: string;
   dbImages: Img[];
   maxImages?: number;
 }
 
-const ImageUploader = ({
+const ResImageUploader = ({
   resId,
   dbImages,
   maxImages = 3,
-}: ImageUploaderProps) => {
+}: ResImageUploaderProps) => {
   const [isUploading, setIsUploading] = React.useState(false);
   const [canUpload, setCanUpload] = React.useState(false);
   const [images, setImages] = React.useState<Img[]>(dbImages);
@@ -47,7 +47,7 @@ const ImageUploader = ({
     <>
       <div
         className={cn(
-          "flex flex-col justify-center items-center h-[82vh] gap-2",
+          "flex flex-col justify-center items-center h-[75vh] gap-2",
           images.length > 0 && "gap-12",
         )}
       >
@@ -84,6 +84,7 @@ const ImageUploader = ({
           <div>
             {canUpload && (
               <UploadButton
+                className="ut-button:bg-primary/90 hover:ut-button:bg-primary ut-button:ut-uploading:bg-primary/70 ut-button:ut-uploading:after:bg-primary"
                 endpoint="imageUploader"
                 onUploadProgress={() => setIsUploading(true)}
                 onClientUploadComplete={(res) => {
@@ -123,11 +124,15 @@ const ImageUploader = ({
               </p>
             )}
             {images.length === 0 && (
-              <p className="text-sm text-center px-2 mt-5 text-gray-500">
-                You have to upload at least <strong>one</strong> image which
-                would be displayed as the main <strong>cover image</strong> of
-                your restaurant.
-              </p>
+              <div className="mt-8 px-6">
+                <p className="text-sm text-center py-3 border border-primary/60 text-gray-500 rounded-md">
+                  You have to upload at least{" "}
+                  <strong className="text-primary/60">one</strong> image which
+                  would be displayed as the main{" "}
+                  <strong className="text-primary/60">cover image</strong> of
+                  your restaurant.
+                </p>
+              </div>
             )}
           </div>
         </div>
@@ -137,4 +142,4 @@ const ImageUploader = ({
   );
 };
 
-export default ImageUploader;
+export default ResImageUploader;
