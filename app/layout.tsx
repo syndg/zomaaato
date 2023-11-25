@@ -1,13 +1,13 @@
-import type { Metadata } from "next";
-import { Poppins } from "next/font/google";
 import "./globals.css";
-import { ClerkProvider } from "@clerk/nextjs";
-import { cn } from "@/lib/utils";
 import NextTopLoader from "nextjs-toploader";
+import { cn } from "@/lib/utils";
+import { Poppins } from "next/font/google";
 import { Toaster } from "react-hot-toast";
+import { ClerkProvider } from "@clerk/nextjs";
 import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
-import { extractRouterConfig } from "uploadthing/server";
 import { ourFileRouter } from "@/app/api/uploadthing/core";
+import { extractRouterConfig } from "uploadthing/server";
+import type { Metadata } from "next";
 
 const poppins = Poppins({
   subsets: ["latin"],

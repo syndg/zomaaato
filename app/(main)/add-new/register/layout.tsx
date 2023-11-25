@@ -7,7 +7,7 @@ export default function RegisterPageLayout({
 }) {
   return (
     <>
-      <div className="sticky top-[3.7rem] p-3 z-10 w-full bg-background/70 backdrop-blur-md border-b border-gray-200/80">
+      <div className="sticky top-[60px] p-3 z-10 w-full bg-background/70 backdrop-blur-md border-b border-gray-200/80">
         <StepVisualizer totalSteps={3} />
       </div>
       {children}

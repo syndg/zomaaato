@@ -47,7 +47,7 @@ const ResImageUploader = ({
     <>
       <div
         className={cn(
-          "flex flex-col justify-center items-center h-[75vh] gap-2",
+          "flex flex-col justify-center items-center h-[72vh] gap-2",
           images.length > 0 && "gap-12",
         )}
       >
@@ -125,7 +125,7 @@ const ResImageUploader = ({
             )}
             {images.length === 0 && (
               <div className="mt-8 px-6">
-                <p className="text-sm text-center py-3 border border-primary/60 text-gray-500 rounded-md">
+                <p className="text-sm text-center px-2 py-3 border border-primary/60 text-gray-500 rounded-md">
                   You have to upload at least{" "}
                   <strong className="text-primary/60">one</strong> image which
                   would be displayed as the main{" "}
