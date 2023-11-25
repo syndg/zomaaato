@@ -20,12 +20,6 @@ export const FormNavigation = ({ loading }: { loading?: boolean }) => {
     }
   };
 
-  const onClickNext = () => {
-    if (currentPage === "3") {
-      router.push("/add-new");
-    }
-  };
-
   return (
     <div className="fixed left-0 bottom-0 w-full bg-white/70 backdrop-blur-sm border-t border-gray-300 md:border-none md:bg-none md:static">
       <div className="max-w-[1200px] mx-auto flex justify-between px-5 py-3">
@@ -40,16 +34,15 @@ export const FormNavigation = ({ loading }: { loading?: boolean }) => {
           Back
         </Button>
         {currentPage === "3" ? (
-          <Link href="/add-new">
-            <Button
-              size="sm"
-              className="text-xl font-semibold"
-              disabled={loading}
-            >
-              Next
-              <ArrowRight size={22} />
-            </Button>
-          </Link>
+          <Button
+            size="sm"
+            className="text-xl font-semibold"
+            disabled={loading}
+            onClick={() => router.refresh()}
+          >
+            <Link href="/add-new">Next</Link>
+            <ArrowRight size={22} />
+          </Button>
         ) : (
           <Button
             type="submit"

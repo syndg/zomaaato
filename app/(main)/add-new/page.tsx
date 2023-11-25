@@ -1,8 +1,9 @@
-import { currentUser } from "@clerk/nextjs";
-import { PlusCircle } from "lucide-react";
 import { db } from "@/lib/db";
-import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { PlusCircle } from "lucide-react";
+import { currentUser } from "@clerk/nextjs";
+import Link from "next/link";
+import ResListCard from "@/components/ResListCard";
 
 export default async function AddNew() {
   const id = (await currentUser())?.id;
@@ -10,6 +11,14 @@ export default async function AddNew() {
   const restaurants = await db.restaurant.findMany({
     where: {
       ownerId: id,
+    },
+    include: {
+      images: {
+        select: {
+          imageUrl: true,
+          utKey: true,
+        },
+      },
     },
   });
 
@@ -23,7 +32,7 @@ export default async function AddNew() {
           <Button size="sm" asChild>
             <Link
               href="/add-new/register/1"
-              className="text-xl rounded-lg font-semibold gap-2"
+              className="text-xl rounded-lg font-cemibold gap-2"
             >
               Add new
               <PlusCircle size={22} />
@@ -35,14 +44,22 @@ export default async function AddNew() {
   }
 
   return (
-    <div className="h-[80vh] grid place-content-center">
-      <h1 className="text-xl font-bold">
-        You have {restaurants.length} restaurants.
-      </h1>
+    <div className="flex flex-col p-5 gap-5">
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-5">
+        {restaurants.map(({ id, name, images }) => (
+          <ResListCard
+            key={id}
+            id={id}
+            name={name}
+            imageUrl={images[0]?.imageUrl}
+            utKey={images[0]?.utKey}
+          />
+        ))}
+      </div>
       <Button size="sm" asChild>
         <Link
           href="/add-new/register/1"
-          className="text-xl rounded-lg font-semibold gap-2"
+          className="self-start mx-auto text-xl rounded-lg font-semibold gap-2"
         >
           Add new
           <PlusCircle size={22} />

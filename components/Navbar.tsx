@@ -4,7 +4,7 @@ import Link from "next/link";
 
 const Navbar = async () => {
   return (
-    <header className="z-20 sticky top-0 bg-white/70 backdrop-blur-sm border-b border-gray-300">
+    <header className="z-20 sticky top-0 bg-white/80 backdrop-blur-md border-b border-gray-300">
       <nav className="flex items-center justify-between px-5 py-2 max-w-[1200px] mx-auto">
         <Link href="/">
           <Image src="/zomato.png" height={30} width={110} alt="Zomato logo" />
