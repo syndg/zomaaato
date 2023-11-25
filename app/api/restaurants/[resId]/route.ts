@@ -24,3 +24,23 @@ export async function PATCH(
     return new NextResponse("Internal Server Error", { status: 500 });
   }
 }
+
+export async function DELETE(
+  req: Request,
+  { params }: { params: { resId: string } },
+) {
+  const { resId } = params;
+
+  try {
+    const deletedRestaurant = await db.restaurant.delete({
+      where: {
+        id: resId,
+      },
+    });
+
+    return NextResponse.json(deletedRestaurant);
+  } catch (error) {
+    console.log(error);
+    return new NextResponse("Internal Server Error", { status: 500 });
+  }
+}

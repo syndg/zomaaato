@@ -1,9 +1,9 @@
+import Link from "next/link";
+import ResListCard from "@/components/ResListCard";
 import { db } from "@/lib/db";
 import { Button } from "@/components/ui/button";
 import { PlusCircle } from "lucide-react";
 import { currentUser } from "@clerk/nextjs";
-import Link from "next/link";
-import ResListCard from "@/components/ResListCard";
 
 export default async function AddNew() {
   const id = (await currentUser())?.id;
@@ -13,12 +13,7 @@ export default async function AddNew() {
       ownerId: id,
     },
     include: {
-      images: {
-        select: {
-          imageUrl: true,
-          utKey: true,
-        },
-      },
+      images: true,
     },
   });
 
@@ -45,15 +40,9 @@ export default async function AddNew() {
 
   return (
     <div className="flex flex-col p-5 gap-5">
-      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
         {restaurants.map(({ id, name, images }) => (
-          <ResListCard
-            key={id}
-            id={id}
-            name={name}
-            imageUrl={images[0]?.imageUrl}
-            utKey={images[0]?.utKey}
-          />
+          <ResListCard key={id} id={id} name={name} image={images[0]} />
         ))}
       </div>
       <Button size="sm" asChild>
