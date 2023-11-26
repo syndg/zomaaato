@@ -4,6 +4,7 @@ import { db } from "@/lib/db";
 import { Button } from "@/components/ui/button";
 import { PlusCircle } from "lucide-react";
 import { currentUser } from "@clerk/nextjs";
+import { Prisma } from "@prisma/client";
 
 export default async function AddNew() {
   const id = (await currentUser())?.id;
@@ -47,7 +48,7 @@ export default async function AddNew() {
             id={id}
             name={name}
             image={images[0]}
-            address={address}
+            address={address as Prisma.JsonObject}
           />
         ))}
       </div>

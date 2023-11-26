@@ -42,10 +42,11 @@ interface ResListCardProps {
     imageUrl: string;
     utKey: string;
   };
-  address: Prisma.JsonValue;
+  address: Prisma.JsonObject;
 }
 
 const ResListCard = ({ id, name, image, address }: ResListCardProps) => {
+  const city = address?.city as string;
   return (
     <Card>
       <Link href={`/restaurants/admin?res_id=${id}`}>
@@ -70,7 +71,7 @@ const ResListCard = ({ id, name, image, address }: ResListCardProps) => {
           <CardTitle>{name}</CardTitle>
           <ListMenu resId={id} imageId={image?.id} imageUtKey={image?.utKey} />
         </div>
-        <CardDescription>{address?.city}</CardDescription>
+        <CardDescription>{city}</CardDescription>
       </CardContent>
     </Card>
   );
