@@ -25,7 +25,14 @@ import {
   Image as ImageIcon,
   Trash2,
 } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Prisma } from "@prisma/client";
 
 interface ResListCardProps {
   id: string;
@@ -35,12 +42,13 @@ interface ResListCardProps {
     imageUrl: string;
     utKey: string;
   };
+  address: Prisma.JsonValue;
 }
 
-const ResListCard = ({ id, name, image }: ResListCardProps) => {
+const ResListCard = ({ id, name, image, address }: ResListCardProps) => {
   return (
     <Card>
-      <Link href={`/admin/res/${id}`}>
+      <Link href={`/restaurants/admin?res_id=${id}`}>
         <CardHeader className="p-4">
           <div className="relative overflow-hidden rounded-md h-56">
             <Image
@@ -57,9 +65,12 @@ const ResListCard = ({ id, name, image }: ResListCardProps) => {
           </div>
         </CardHeader>
       </Link>
-      <CardContent className="flex justify-between">
-        <CardTitle>{name}</CardTitle>
-        <ListMenu resId={id} imageId={image?.id} imageUtKey={image?.utKey} />
+      <CardContent>
+        <div className="flex justify-between">
+          <CardTitle>{name}</CardTitle>
+          <ListMenu resId={id} imageId={image?.id} imageUtKey={image?.utKey} />
+        </div>
+        <CardDescription>{address?.city}</CardDescription>
       </CardContent>
     </Card>
   );
