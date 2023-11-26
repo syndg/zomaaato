@@ -97,6 +97,10 @@ const Formstep1 = ({ initialValues }: Formstep1Props) => {
     setValue("lng", (address?.lng as string) || location.lng);
     setValue("city", (address?.city as string) || location.city);
     setValue("pincode", (address?.pincode as string) || location.pincode);
+    setValue(
+      "fullAddress",
+      (address?.fullAddress as string) || location.fullAddress,
+    );
   }, [location]);
 
   const onSubmit = async (data: FormValues) => {

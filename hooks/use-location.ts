@@ -9,6 +9,7 @@ export const useGetLocation = () => {
     lng: "",
     city: "",
     pincode: "",
+    fullAddress: "",
   });
   const [permission, setPermission] = useState(true);
   const [isLocationLoading, setIsLocationLoading] = useState(false);
@@ -28,6 +29,7 @@ export const useGetLocation = () => {
               lng: position.coords.longitude.toString(),
               city: res.data.address.city,
               pincode: res.data.address.postcode,
+              fullAddress: res.data.display_name,
             });
             setPermission(true);
             setIsLocationLoading(false);
