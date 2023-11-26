@@ -1,4 +1,5 @@
 import { db } from "@/lib/db";
+import { Prisma } from "@prisma/client";
 import { NextResponse } from "next/server";
 
 export async function PATCH(
@@ -6,7 +7,14 @@ export async function PATCH(
   { params }: { params: { resId: string } },
 ) {
   const { resId } = params;
-  const body = await req.json();
+  const { lat, lng, city, pincode, fullAddress, ...rest } = await req.json();
+  const addressJson = {
+    lat,
+    lng,
+    city,
+    pincode,
+    fullAddress,
+  } as Prisma.JsonObject;
 
   try {
     const restaurant = await db.restaurant.update({
@@ -14,7 +22,8 @@ export async function PATCH(
         id: resId,
       },
       data: {
-        ...body,
+        address: addressJson,
+        ...rest,
       },
     });
 
