@@ -11,7 +11,7 @@ export const getRestaurant = async (id: string) => {
 };
 
 export const getResTypeandTiming = async (resId: string) => {
-  const result = await db.restaurantTypeTimings.findFirst({
+  const result = await db.restaurantTypeTimings.findUnique({
     where: {
       restaurantId: resId,
     },
