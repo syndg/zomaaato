@@ -56,13 +56,10 @@ const UserButton = ({ className }: UserButtonProps) => {
         <Button
           variant="outline"
           className={cn(
-            "group flex gap-1 border-2 data-[state=open]:bg-muted",
+            "group flex gap-1 border-2 data-[state=open]:bg-muted rounded-full px-2",
             className,
           )}
         >
-          <span className="font-semibold text-lg text-gray-800">
-            {user?.fullName?.split(" ")[0]}
-          </span>
           <Image
             src={user?.imageUrl}
             alt="User Image"

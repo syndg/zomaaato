@@ -8,8 +8,8 @@ export default function FormPage2Layout({
   return (
     <div className="grid lg:grid-cols-2">
       {children}
-      <div className="hidden sticky top-[4rem] right-0 h-[90vh] lg:grid place-content-center">
-        <div className="relative w-[450px] h-[450px]">
+      <div className="hidden sticky top-[8.2rem] right-0 h-[80vh] lg:grid place-content-center">
+        <div className="relative w-[420px] h-[420px]">
           <Image
             src="/form2.webp"
             className="scale-95"

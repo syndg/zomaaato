@@ -1,19 +1,19 @@
 import Image from "next/image";
 
-export default function FormPage1Layout({
+export default function FormPage2Layout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <div className="grid md:grid-cols-2 gap-12">
+    <div className="grid lg:grid-cols-2">
       {children}
-      <div className="grid place-content-center">
-        <div className="hidden md:block relative w-[500px] h-[500px]">
+      <div className="hidden sticky top-[8rem] right-0 h-[75vh] lg:grid place-content-center">
+        <div className="relative w-[450px] h-[450px]">
           <Image
             src="/form1.jpg"
             className="scale-95"
-            alt="Picture of a cafe/restaurant."
+            alt="Picture of a clock"
             fill
           />
         </div>
