@@ -4,7 +4,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useLocation } from "@/hooks/use-location";
+import { useGetLocation } from "@/hooks/use-location";
 import { useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
 
@@ -13,7 +13,7 @@ import { Loader2, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import CustomInput from "@/components/forms/CustomInput";
 import { FormCard } from "@/components/forms/form-card";
-import { Restaurant } from "@prisma/client";
+import { Prisma, Restaurant } from "@prisma/client";
 
 const formSchema = z.object({
   name: z
@@ -33,6 +33,14 @@ const formSchema = z.object({
       message: "Longitude must be a value between -180 and 180.",
     })
     .trim(),
+  city: z.string().max(20),
+  pincode: z
+    .string()
+    .max(6)
+    .regex(/^[0-9]+$/, {
+      message: "Pincode must be a number",
+    }),
+  fullAddress: z.string().optional(),
 });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -41,28 +49,54 @@ interface Formstep1Props {
   initialValues: Restaurant | null;
 }
 
+interface DefValues extends Restaurant {
+  lat: string;
+  lng: string;
+  city: string;
+  pincode: string;
+  fullAddress: string;
+}
+
 const Formstep1 = ({ initialValues }: Formstep1Props) => {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { location, getLocation, permission, isLocationLoading } =
-    useLocation();
-  const disabledCondition = location.lat !== "" && location.lng !== "";
+    useGetLocation();
+
+  let defValues: DefValues | null = null;
+  const address = initialValues?.address as Prisma.JsonObject;
+
+  if (initialValues !== null) {
+    defValues = {
+      ...initialValues,
+      lat: address?.lat as string,
+      lng: address?.lng as string,
+      city: address?.city as string,
+      pincode: address?.pincode as string,
+      fullAddress: address?.fullAddress as string,
+    };
+  }
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
-    defaultValues: initialValues || {
+    defaultValues: defValues || {
       name: "",
       description: "",
       lat: "",
       lng: "",
+      city: "",
+      pincode: "",
+      fullAddress: "",
     },
   });
 
   const { setValue } = form;
 
   useEffect(() => {
-    setValue("lat", initialValues?.lat || location.lat);
-    setValue("lng", initialValues?.lng || location.lng);
+    setValue("lat", (address?.lat as string) || location.lat);
+    setValue("lng", (address?.lng as string) || location.lng);
+    setValue("city", (address?.city as string) || location.city);
+    setValue("pincode", (address?.pincode as string) || location.pincode);
   }, [location]);
 
   const onSubmit = async (data: FormValues) => {
@@ -93,7 +127,7 @@ const Formstep1 = ({ initialValues }: Formstep1Props) => {
     <Form {...form}>
       <div className="p-3">
         <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-5">
-          <h1 className="font-bold text-2xl mt-5">Restaurant Information</h1>
+          <h1 className="font-bold text-2xl mt-2">Restaurant Information</h1>
           <FormCard className="grid gap-3 text-lg">
             <h2 className="font-bold text-xl mb-2 leading-3 text-gray-800">
               Restaurant Details
@@ -118,20 +152,36 @@ const Formstep1 = ({ initialValues }: Formstep1Props) => {
             <h2 className="font-bold text-gray-800 text-xl mb-5 leading-3">
               Location Information
             </h2>
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid gap-3">
               <CustomInput
-                name="lat"
-                label="Latitude"
+                name="fullAddress"
+                label="Full Address"
                 control={form.control}
-                disabled={disabledCondition}
+                placeholerText="Enter your restaurant's full address"
+                optional
               />
+              <div className="grid grid-cols-2 gap-2">
+                <CustomInput
+                  name="lat"
+                  label="Latitude"
+                  control={form.control}
+                />
 
-              <CustomInput
-                name="lng"
-                label="Longitude"
-                control={form.control}
-                disabled={disabledCondition}
-              />
+                <CustomInput
+                  name="lng"
+                  label="Longitude"
+                  control={form.control}
+                />
+              </div>
+              <div className="grid grid-cols-2 gap-2">
+                <CustomInput name="city" label="City" control={form.control} />
+
+                <CustomInput
+                  name="pincode"
+                  label="Pincode"
+                  control={form.control}
+                />
+              </div>
             </div>
             <div className="flex items-center gap-3 mt-3">
               <Button
@@ -143,16 +193,22 @@ const Formstep1 = ({ initialValues }: Formstep1Props) => {
                 disabled={isLocationLoading}
               >
                 Get Location
-                {isLocationLoading && !disabledCondition && permission && (
+                {isLocationLoading && permission && (
                   <Loader2 size={20} className="animate-spin ml-2" />
                 )}
               </Button>
               {!permission && (
-                <p className="text-red-500">
+                <p className="text-red-500 text-sm">
                   You have denied access to your location.
                 </p>
               )}
             </div>
+            <p className="mt-3 border-primary border p-3 text-xs rounded-md">
+              <strong className="text-primary">Note:</strong> The Get location
+              button uses your current location through the browser, which might
+              not be accurate everytime. In that case, you can enter the correct
+              location manually.
+            </p>
           </FormCard>
           <div className="flex justify-end">
             <Button

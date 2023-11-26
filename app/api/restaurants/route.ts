@@ -1,16 +1,27 @@
 import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { currentUser } from "@clerk/nextjs";
+import { Prisma } from "@prisma/client";
 
 export async function POST(req: Request) {
   const id = (await currentUser())?.id;
 
-  const body = await req.json();
+  const { lat, lng, city, pincode, fullAddress, ...rest } = await req.json();
+
+  const addressJson = {
+    lat,
+    lng,
+    city,
+    pincode,
+    fullAddress,
+  } as Prisma.JsonObject;
+
   try {
     const restaurant = await db.restaurant.create({
       data: {
         ownerId: id,
-        ...body,
+        address: addressJson,
+        ...rest,
       },
     });
 

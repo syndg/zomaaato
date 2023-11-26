@@ -25,9 +25,8 @@ model Restaurant {
   id          String                 @id @default(uuid())
   name        String
   description String
-  lat         String
-  lng         String
   ownerId     String
+  address     Json
   owner       User                   @relation(fields: [ownerId], references: [id], onDelete: Cascade)
   images      RestaurantImages[]
   timings     RestaurantTypeTimings?

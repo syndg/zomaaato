@@ -27,7 +27,7 @@ export default async function AddNew() {
           <Button size="sm" asChild>
             <Link
               href="/add-new/register/1"
-              className="text-xl rounded-lg font-cemibold gap-2"
+              className="text-xl rounded-lg font-cemibold gap-2 active:scale-95 transition-all duration-100"
             >
               Add new
               <PlusCircle size={22} />
@@ -48,7 +48,7 @@ export default async function AddNew() {
       <Button size="sm" asChild>
         <Link
           href="/add-new/register/1"
-          className="self-start mx-auto text-xl rounded-lg font-semibold gap-2"
+          className="self-start mx-auto text-xl rounded-lg font-semibold gap-2 active:scale-95 transition-all duration-100"
         >
           Add new
           <PlusCircle size={22} />
