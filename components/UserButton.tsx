@@ -32,7 +32,7 @@ const UserButton = ({ className }: UserButtonProps) => {
 
   if (!isLoaded) {
     return (
-      <div className="flex items-center gap-1 py-1 px-3 rounded-md text-gray-800 border-2 border-gray-200 focus:outline-none">
+      <div className="flex items-center gap-1 py-1 px-3 rounded-full text-gray-800 border-2 border-gray-200 focus:outline-none">
         <Loader2 size={28} className="animate-spin" />
       </div>
     );

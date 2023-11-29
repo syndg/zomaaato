@@ -1,7 +1,8 @@
 "use client";
 import { usePathname } from "next/navigation";
 import { cn, range } from "@/lib/utils";
-import { Check, ChevronRight } from "lucide-react";
+import { ChevronRight } from "lucide-react";
+import { motion } from "framer-motion";
 
 interface StepVisualizerProps {
   totalSteps: number;
@@ -46,21 +47,51 @@ const Step = ({ step, currentStep, totalSteps }: StepProps) => {
   return (
     <div className="flex items-center gap-4">
       {status === "complete" ? (
-        <span className="flex items-center p-1 justify-center rounded-full bg-green-600">
-          <Check className="text-white" size={20} />
-        </span>
+        <motion.span
+          initial={{
+            backgroundColor: "white",
+          }}
+          animate={{
+            backgroundColor: "#16a34a",
+          }}
+          transition={{ duration: 0.3 }}
+          className="flex items-center p-[3px] justify-center border-2 border-green-600 rounded-full"
+        >
+          <CheckIcon className="h-5 w-5 text-white" />
+        </motion.span>
       ) : (
         <span
           className={cn(
             "rounded-md",
-            status === "active" && "px-3 border border-gray-600 bg-gray-100",
-            status === "inactive" && "text-gray-400",
+            status === "active" && "px-3 border border-gray-600",
           )}
         >
           Step {step}
         </span>
       )}
+
       {step < totalSteps && <ChevronRight className="text-muted-foreground" />}
     </div>
+  );
+};
+
+const CheckIcon = ({ className }: { className?: string }) => {
+  return (
+    <svg
+      fill="none"
+      viewBox="0 0 24 24"
+      strokeWidth={3}
+      stroke="currentColor"
+      className={className}
+    >
+      <motion.path
+        initial={{ pathLength: 0 }}
+        animate={{ pathLength: 1 }}
+        transition={{ duration: 0.5, delay: 0.4, type: "tween" }}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M5 13l4 4L19 7"
+      />
+    </svg>
   );
 };
