@@ -104,8 +104,9 @@ const FormStep2 = ({ resId, initialValues }: FormStep2Props) => {
       if (initialValues) {
         await axios
           .patch(`/api/restaurants/${resId}/resTypeandTime`, data)
-          .then((res) => {
-            router.push(`/add-new/register/3?res_id=${res.data.restaurantId}`);
+          .then(() => {
+            router.push("/add-new");
+            router.refresh();
             toast.success("Updated successfully");
           });
       } else {

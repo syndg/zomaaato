@@ -7,6 +7,7 @@ import { X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { UploadButton } from "@/lib/uploadthing";
 import { FormNavigation } from "@/components/forms/form-nav";
+import { useRouter } from "next/navigation";
 
 type Img = {
   imageUrl: string;
@@ -25,6 +26,7 @@ const ResImageUploader = ({
   dbImages,
   maxImages = 3,
 }: ResImageUploaderProps) => {
+  const router = useRouter();
   const [isUploading, setIsUploading] = React.useState(false);
   const [canUpload, setCanUpload] = React.useState(false);
   const [images, setImages] = React.useState<Img[]>(dbImages);
@@ -33,6 +35,12 @@ const ResImageUploader = ({
     axios.delete(`/api/restaurants/${resId}/resImages?id=${id}&utKey=${key}`);
     const filteredImages = images.filter((image) => image.utKey !== key);
     setImages(filteredImages);
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    router.push(`/add-new`);
+    router.refresh();
   };
 
   React.useEffect(() => {
@@ -44,7 +52,7 @@ const ResImageUploader = ({
   }, [images]);
 
   return (
-    <>
+    <form onSubmit={handleSubmit}>
       <div
         className={cn(
           "flex flex-col justify-center items-center h-[72vh] gap-2",
@@ -138,7 +146,7 @@ const ResImageUploader = ({
         </div>
       </div>
       <FormNavigation loading={images.length === 0} />
-    </>
+    </form>
   );
 };
 

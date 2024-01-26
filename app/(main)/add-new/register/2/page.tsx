@@ -4,6 +4,8 @@ import { redirect } from "next/navigation";
 import { getResTypeandTiming } from "@/actions/getRestaurant";
 import { auth } from "@clerk/nextjs";
 
+export const dynamic = "force-dynamic";
+
 export default async function FormPage({
   searchParams,
 }: {

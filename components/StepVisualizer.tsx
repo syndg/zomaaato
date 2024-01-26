@@ -54,16 +54,17 @@ const Step = ({ step, currentStep, totalSteps }: StepProps) => {
           animate={{
             backgroundColor: "#16a34a",
           }}
-          transition={{ duration: 0.3 }}
-          className="flex items-center p-[3px] justify-center border-2 border-green-600 rounded-full"
+          transition={{ duration: 0.5 }}
+          className="flex items-center p-[3px] justify-center border-2 border-green-600 rounded-full shadow-md"
         >
           <CheckIcon className="h-5 w-5 text-white" />
         </motion.span>
       ) : (
         <span
           className={cn(
-            "rounded-md",
-            status === "active" && "px-3 border border-gray-600",
+            "text-muted-foreground",
+            status === "active" &&
+              "px-3 border-2 border-gray-600 rounded-full text-black shadow-md",
           )}
         >
           Step {step}

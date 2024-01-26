@@ -1,7 +1,7 @@
 import "./globals.css";
 import NextTopLoader from "nextjs-toploader";
 import { cn } from "@/lib/utils";
-import { Poppins } from "next/font/google";
+import { Barlow } from "next/font/google";
 import { Toaster } from "react-hot-toast";
 import { ClerkProvider } from "@clerk/nextjs";
 import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
@@ -9,7 +9,7 @@ import { ourFileRouter } from "@/app/api/uploadthing/core";
 import { extractRouterConfig } from "uploadthing/server";
 import type { Metadata } from "next";
 
-const poppins = Poppins({
+const barlow = Barlow({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700", "800", "900"],
 });
@@ -27,7 +27,7 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <body className={cn(poppins.className, "relative")}>
+        <body className={cn(barlow.className, "relative")}>
           <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
           <NextTopLoader
             height={4}

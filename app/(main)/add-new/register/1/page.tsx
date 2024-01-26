@@ -2,6 +2,8 @@ import Formstep1 from "@/components/forms/FormStep1";
 import { getRestaurant } from "@/actions/getRestaurant";
 import { auth } from "@clerk/nextjs";
 
+export const dynamic = "force-dynamic";
+
 export default async function FormPage({
   searchParams,
 }: {
@@ -9,7 +11,7 @@ export default async function FormPage({
 }) {
   const { userId } = auth();
   const { res_id } = searchParams;
-  const restaurant = await getRestaurant(res_id ? res_id : "");
+  const restaurant = await getRestaurant(res_id);
   const isOwner = userId === restaurant?.ownerId;
 
   if (res_id && !isOwner) {

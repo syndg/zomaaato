@@ -26,7 +26,7 @@ const AlertModal = ({
   loading,
 }: AlertModalProps) => {
   const onChange = (open: boolean) => {
-    if (!open) {
+    if (open) {
       onClose();
     }
   };

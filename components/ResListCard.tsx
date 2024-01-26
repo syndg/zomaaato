@@ -67,7 +67,7 @@ const ResListCard = ({ id, name, image, address }: ResListCardProps) => {
         </CardHeader>
       </Link>
       <CardContent>
-        <div className="flex justify-between">
+        <div className="flex items-center justify-between">
           <CardTitle>{name}</CardTitle>
           <ListMenu resId={id} imageId={image?.id} imageUtKey={image?.utKey} />
         </div>
@@ -137,21 +137,27 @@ const ListMenu = ({ resId, imageId, imageUtKey }: ListMenuProps) => {
               <DropdownMenuPortal>
                 <DropdownMenuSubContent>
                   <DropdownMenuItem asChild>
-                    <Link href={`/add-new/register/1?res_id=${resId}`}>
+                    <Link
+                      href={`/add-new/register/1?res_id=${resId}&type=edit`}
+                    >
                       <BookUser className="mr-2 h-4 w-4" />
                       Details
                     </Link>
                   </DropdownMenuItem>
 
                   <DropdownMenuItem asChild>
-                    <Link href={`/add-new/register/2?res_id=${resId}`}>
+                    <Link
+                      href={`/add-new/register/2?res_id=${resId}&type=edit`}
+                    >
                       <FileType className="mr-2 h-4 w-4" />
                       Type and Timings
                     </Link>
                   </DropdownMenuItem>
 
                   <DropdownMenuItem asChild>
-                    <Link href={`/add-new/register/3?res_id=${resId}`}>
+                    <Link
+                      href={`/add-new/register/3?res_id=${resId}&type=edit`}
+                    >
                       <ImageIcon className="mr-2 h-4 w-4" />
                       Images
                     </Link>

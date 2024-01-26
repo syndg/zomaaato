@@ -9,11 +9,12 @@ import { useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
 
 import { Form } from "@/components/ui/form";
-import { Loader2, ArrowRight } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import CustomInput from "@/components/forms/CustomInput";
 import { FormCard } from "@/components/forms/form-card";
 import { Prisma, Restaurant } from "@prisma/client";
+import { FormNavigation } from "./form-nav";
 
 const formSchema = z.object({
   name: z
@@ -110,8 +111,9 @@ const Formstep1 = ({ initialValues }: Formstep1Props) => {
       if (initialValues) {
         await axios
           .patch(`/api/restaurants/${initialValues.id}`, data)
-          .then((res) => {
-            router.push(`/add-new/register/2?res_id=${res.data.id}`);
+          .then(() => {
+            router.push("/add-new");
+            router.refresh();
             toast.success("Updated successfully");
           });
       } else {
@@ -129,8 +131,8 @@ const Formstep1 = ({ initialValues }: Formstep1Props) => {
 
   return (
     <Form {...form}>
-      <div className="p-3">
-        <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-5">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="p-3">
+        <div className="grid gap-5">
           <h1 className="font-bold text-2xl mt-2">Restaurant Information</h1>
           <FormCard className="grid gap-3 text-lg">
             <h2 className="font-bold text-xl mb-2 leading-3 text-gray-800">
@@ -193,10 +195,10 @@ const Formstep1 = ({ initialValues }: Formstep1Props) => {
                 type="button"
                 size="sm"
                 variant="outline"
-                className="font-mono text-sm items-center font-bold"
+                className="text-sm items-center font-bold border-gray-400"
                 disabled={isLocationLoading}
               >
-                Get Location
+                Get location
                 {isLocationLoading && permission && (
                   <Loader2 size={20} className="animate-spin ml-2" />
                 )}
@@ -214,23 +216,9 @@ const Formstep1 = ({ initialValues }: Formstep1Props) => {
               location manually.
             </p>
           </FormCard>
-          <div className="flex justify-end">
-            <Button
-              type="submit"
-              size="sm"
-              className="text-xl font-semibold"
-              disabled={isSubmitting}
-            >
-              Next
-              {isSubmitting ? (
-                <Loader2 size={22} className="animate-spin ml-2" />
-              ) : (
-                <ArrowRight size={22} />
-              )}
-            </Button>
-          </div>
-        </form>
-      </div>
+        </div>
+        <FormNavigation loading={isSubmitting} />
+      </form>
     </Form>
   );
 };

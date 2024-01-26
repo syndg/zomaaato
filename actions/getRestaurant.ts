@@ -1,6 +1,7 @@
 import { db } from "@/lib/db";
 
-export const getRestaurant = async (id: string) => {
+export const getRestaurant = async (id?: string) => {
+  if (!id) return null;
   const restaurant = await db.restaurant.findUnique({
     where: {
       id,

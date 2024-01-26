@@ -86,8 +86,8 @@ const UserButton = ({ className }: UserButtonProps) => {
             height={38}
             className="rounded-full"
           />
-          <div className="flex flex-col text-sm leading-4">
-            <span className="font-semibold text-gray-800">
+          <div className="flex flex-col text-sm leading-4 gap-[3px]">
+            <span className="font-semibold text-gray-800 text-[1.125rem]">
               {user?.fullName}
             </span>
             <span className="text-primary">
