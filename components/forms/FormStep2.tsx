@@ -22,34 +22,10 @@ import {
 import { FormCard } from "./form-card";
 import { FormNavigation } from "./form-nav";
 
-const formSchema = z.object({
-  type: z.enum(["DINEIN", "DELIVERY", "BOTH"], {
-    required_error: "You need to select a type.",
-  }),
-  categories: z
-    .array(z.string())
-    .max(2, {
-      message: "You can select up to 2 categories",
-    })
-    .refine((categories) => categories.some((category) => category), {
-      message: "You need to select at least 1 category",
-    }),
-  cuisines: z
-    .array(z.string())
-    .max(2, {
-      message: "You can select up to 2 cuisines",
-    })
-    .refine((cuisines) => cuisines.some((cuisine) => cuisine), {
-      message: "You need to select at least 1 cuisine",
-    }),
-  open: z.string(),
-  close: z.string(),
-  days: z.array(z.string()).refine((days) => days.some((day) => day), {
-    message: "You need to select at least 1 open day",
-  }),
-});
-
-type FormValues = z.infer<typeof formSchema>;
+import {
+  CreateResTypeTime,
+  createResTypeTimeSchema,
+} from "@/lib/schemas/restaurant";
 
 interface FormStep2Props {
   resId: string;
@@ -76,8 +52,8 @@ const FormStep2 = ({ resId, initialValues }: FormStep2Props) => {
     };
   }
 
-  const form = useForm<FormValues>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<CreateResTypeTime>({
+    resolver: zodResolver(createResTypeTimeSchema),
     defaultValues: defValues || {
       cuisines: [],
       categories: [],
@@ -87,7 +63,7 @@ const FormStep2 = ({ resId, initialValues }: FormStep2Props) => {
     },
   });
 
-  const onSubmit = async (data: FormValues) => {
+  const onSubmit = async (data: CreateResTypeTime) => {
     try {
       setIsSubmitting(true);
 

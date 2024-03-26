@@ -16,35 +16,12 @@ import { FormCard } from "@/components/forms/form-card";
 import { Prisma, Restaurant } from "@prisma/client";
 import { FormNavigation } from "./form-nav";
 
-const formSchema = z.object({
-  name: z
-    .string()
-    .min(3, { message: "Name must be at least 3 characters" })
-    .max(30),
-  description: z.string().max(120).optional(),
-  lat: z
-    .string()
-    .regex(/^([-+]?([1-8]?\d(\.\d+)?|90(\.0+)?))$/, {
-      message: "Latitude must be a value between -90 and 90",
-    })
-    .trim(),
-  lng: z
-    .string()
-    .regex(/^([-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?))$/, {
-      message: "Longitude must be a value between -180 and 180.",
-    })
-    .trim(),
-  city: z.string().max(20),
-  pincode: z
-    .string()
-    .max(6)
-    .regex(/^[0-9]+$/, {
-      message: "Pincode must be a number",
-    }),
-  fullAddress: z.string().optional(),
-});
 
-type FormValues = z.infer<typeof formSchema>;
+import {
+  CreateRestaurant,
+  createRestaurantSchema,
+} from "@/lib/schemas/restaurant";
+import { getDefaultValuesFromInitialValues } from "@/lib/utils";
 
 interface Formstep1Props {
   initialValues: Restaurant | null;
@@ -78,9 +55,9 @@ const Formstep1 = ({ initialValues }: Formstep1Props) => {
     };
   }
 
-  const form = useForm<FormValues>({
-    resolver: zodResolver(formSchema),
     defaultValues: defValues || {
+  const form = useForm<CreateRestaurant>({
+    resolver: zodResolver(createRestaurantSchema),
       name: "",
       description: "",
       lat: "",
