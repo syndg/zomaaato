@@ -4,7 +4,7 @@ export default authMiddleware({
   publicRoutes: [
     "/",
     "/:location/restaurants",
-    "/api/webhook",
+    "/api/webhook(.*)",
     "/api/uploadthing",
   ],
 });

@@ -58,10 +58,10 @@ const ResListCard = ({ id, name, image, address }: ResListCardProps) => {
                   ? image.imageUrl
                   : "https://placehold.co/600x400/png?text=Please+upload+an+image"
               }
-              fill
               alt="Restaurant cover image"
               className="rounded-md object-cover"
               loading="lazy"
+              fill
             />
           </div>
         </CardHeader>

@@ -11,10 +11,10 @@ export default async function FormPage({
 }: {
   searchParams: { [res_id: string]: string };
 }) {
+  const { userId } = auth();
   const { res_id } = searchParams;
   const restaurant = await getRestaurant(res_id);
   const resTypeandTiming = await getResTypeandTiming(res_id);
-  const { userId } = auth();
 
   if (!res_id || !restaurant) {
     redirect("/add-new/register/1");

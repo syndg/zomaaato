@@ -31,6 +31,14 @@ const ResImageUploader = ({
   const [canUpload, setCanUpload] = React.useState(false);
   const [images, setImages] = React.useState<Img[]>(dbImages);
 
+  React.useEffect(() => {
+    if (images.length < maxImages) {
+      setCanUpload(true);
+    } else {
+      setCanUpload(false);
+    }
+  }, [images]);
+
   const handleDelete = async (key: string, id: string) => {
     axios.delete(`/api/restaurants/${resId}/resImages?id=${id}&utKey=${key}`);
     const filteredImages = images.filter((image) => image.utKey !== key);
@@ -42,14 +50,6 @@ const ResImageUploader = ({
     router.push(`/add-new`);
     router.refresh();
   };
-
-  React.useEffect(() => {
-    if (images.length < maxImages) {
-      setCanUpload(true);
-    } else {
-      setCanUpload(false);
-    }
-  }, [images]);
 
   return (
     <form onSubmit={handleSubmit}>

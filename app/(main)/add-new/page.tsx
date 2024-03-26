@@ -1,10 +1,8 @@
-import Link from "next/link";
 import ResListCard from "@/components/ResListCard";
 import { db } from "@/lib/db";
-import { Button } from "@/components/ui/button";
-import { PlusCircle } from "lucide-react";
 import { currentUser } from "@clerk/nextjs";
 import { Prisma } from "@prisma/client";
+import AddNewButton from "@/components/AddNewButton";
 
 export default async function AddNew() {
   const id = (await currentUser())?.id;
@@ -25,15 +23,7 @@ export default async function AddNew() {
           You do not have any restaurants listed.
         </p>
         <div className="flex justify-center">
-          <Button size="sm" asChild>
-            <Link
-              href="/add-new/register/1"
-              className="text-xl rounded-lg font-cemibold gap-2 active:scale-95 transition-all duration-100"
-            >
-              Add new
-              <PlusCircle size={22} />
-            </Link>
-          </Button>
+          <AddNewButton />
         </div>
       </div>
     );
@@ -52,15 +42,7 @@ export default async function AddNew() {
           />
         ))}
       </div>
-      <Button size="sm" asChild>
-        <Link
-          href="/add-new/register/1"
-          className="self-start mx-auto text-xl rounded-lg font-semibold gap-2 active:scale-95 transition-all duration-100"
-        >
-          Add new
-          <PlusCircle size={22} />
-        </Link>
-      </Button>
+      <AddNewButton />
     </div>
   );
 }
