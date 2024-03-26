@@ -5,12 +5,12 @@ import { Prisma } from "@prisma/client";
 
 export async function POST(req: Request) {
   const id = (await currentUser())?.id;
+  console.log(id);
 
-  const { lat, lng, city, pincode, fullAddress, ...rest } = await req.json();
+  const { latitude, longitude, city, pincode, fullAddress, ...rest } =
+    await req.json();
 
   const addressJson = {
-    lat,
-    lng,
     city,
     pincode,
     fullAddress,
@@ -21,6 +21,8 @@ export async function POST(req: Request) {
       data: {
         ownerId: id,
         address: addressJson,
+        lat: parseFloat(latitude),
+        lon: parseFloat(longitude),
         ...rest,
       },
     });

@@ -1,15 +1,15 @@
 "use client";
 import axios from "axios";
-import { ZodError, z } from "zod";
+import { ZodError } from "zod";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "react-hot-toast";
 
 import { Prisma, RestaurantTypeTimings } from "@prisma/client";
 import { Form, FormLabel } from "@/components/ui/form";
-import CustomSelect from "./CustomSelect";
+import CustomSelect from "@/components/forms/CustomSelect";
 import CustomRadio from "@/components/forms/CustomRadio";
 import CustomCheckbox from "@/components/forms/CustomCheckbox";
 import {
@@ -152,14 +152,14 @@ const FormStep2 = ({ resId, initialValues }: FormStep2Props) => {
             <CustomSelect
               control={form.control}
               name="open"
-              label="opens at"
+              label="Opens at"
               options={timeOptions}
               placeholderText="Select time"
             />
             <CustomSelect
               control={form.control}
               name="close"
-              label="closes at"
+              label="Closes at"
               options={timeOptions}
               placeholderText="Select time"
             />

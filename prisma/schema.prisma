@@ -1,11 +1,12 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
 }
 
 datasource db {
-  provider  = "postgresql"
-  url       = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
+  provider   = "postgresql"
+  url        = env("DATABASE_URL")
+  extensions = [postgis]
 }
 
 model User {
@@ -22,28 +23,20 @@ model User {
 }
 
 model Restaurant {
-  id          String                 @id @default(uuid())
-  name        String
-  description String
-  ownerId     String
-  address     Json
-  owner       User                   @relation(fields: [ownerId], references: [id], onDelete: Cascade)
-  images      RestaurantImages[]
-  timings     RestaurantTypeTimings?
-  reviews     Review[]
-  items       Item[]
+  id             String                 @id @default(uuid())
+  name           String
+  description    String?
+  address        Json?
+  lat            Float
+  lon            Float
+  ownerId        String
+  owner          User                   @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  images         RestaurantImages[]
+  typeandtimings RestaurantTypeTimings?
+  reviews        Review[]
+  items          Item[]
 
   @@index([ownerId])
-}
-
-model RestaurantImages {
-  id           String     @id @default(uuid())
-  imageUrl     String
-  utKey        String
-  restaurantId String
-  restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
-
-  @@index([restaurantId])
 }
 
 enum RestaurantType {
@@ -61,6 +54,16 @@ model RestaurantTypeTimings {
   categories   String[]
   restaurantId String         @unique
   restaurant   Restaurant     @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+
+  @@index([restaurantId])
+}
+
+model RestaurantImages {
+  id           String     @id @default(uuid())
+  imageUrl     String
+  utKey        String
+  restaurantId String
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
 
   @@index([restaurantId])
 }

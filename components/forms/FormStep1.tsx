@@ -1,5 +1,4 @@
 "use client";
-import { z } from "zod";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
@@ -9,13 +8,12 @@ import { useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
 
 import { Form } from "@/components/ui/form";
-import { Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import CustomInput from "@/components/forms/CustomInput";
+import { Loader2 } from "lucide-react";
 import { FormCard } from "@/components/forms/form-card";
+import { FormNavigation } from "@/components/forms/form-nav";
 import { Prisma, Restaurant } from "@prisma/client";
-import { FormNavigation } from "./form-nav";
-
+import CustomInput from "@/components/forms/CustomInput";
 
 import {
   CreateRestaurant,
@@ -27,41 +25,22 @@ interface Formstep1Props {
   initialValues: Restaurant | null;
 }
 
-interface DefValues extends Restaurant {
-  lat: string;
-  lng: string;
-  city: string;
-  pincode: string;
-  fullAddress: string;
-}
-
 const Formstep1 = ({ initialValues }: Formstep1Props) => {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { location, getLocation, permission, isLocationLoading } =
     useGetLocation();
+  const defaultValues = getDefaultValuesFromInitialValues(initialValues);
 
-  let defValues: DefValues | null = null;
   const address = initialValues?.address as Prisma.JsonObject;
 
-  if (initialValues !== null) {
-    defValues = {
-      ...initialValues,
-      lat: address?.lat as string,
-      lng: address?.lng as string,
-      city: address?.city as string,
-      pincode: address?.pincode as string,
-      fullAddress: address?.fullAddress as string,
-    };
-  }
-
-    defaultValues: defValues || {
   const form = useForm<CreateRestaurant>({
     resolver: zodResolver(createRestaurantSchema),
+    defaultValues: defaultValues || {
       name: "",
       description: "",
-      lat: "",
-      lng: "",
+      latitude: "",
+      longitude: "",
       city: "",
       pincode: "",
       fullAddress: "",
@@ -71,8 +50,8 @@ const Formstep1 = ({ initialValues }: Formstep1Props) => {
   const { setValue } = form;
 
   useEffect(() => {
-    setValue("lat", (address?.lat as string) || location.lat);
-    setValue("lng", (address?.lng as string) || location.lng);
+    setValue("latitude", initialValues?.lat.toString() || location.lat);
+    setValue("longitude", initialValues?.lon.toString() || location.lng);
     setValue("city", (address?.city as string) || location.city);
     setValue("pincode", (address?.pincode as string) || location.pincode);
     setValue(
@@ -81,7 +60,7 @@ const Formstep1 = ({ initialValues }: Formstep1Props) => {
     );
   }, [location]);
 
-  const onSubmit = async (data: FormValues) => {
+  const onSubmit = async (data: CreateRestaurant) => {
     try {
       setIsSubmitting(true);
 
@@ -145,13 +124,13 @@ const Formstep1 = ({ initialValues }: Formstep1Props) => {
               />
               <div className="grid grid-cols-2 gap-2">
                 <CustomInput
-                  name="lat"
+                  name="latitude"
                   label="Latitude"
                   control={form.control}
                 />
 
                 <CustomInput
-                  name="lng"
+                  name="longitude"
                   label="Longitude"
                   control={form.control}
                 />
